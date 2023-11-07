@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+//import TurnierCaller from './components/TurnierCaller';
+import './style.css';
+import LoginPage from './components/LoginPage';
+import Uebersicht from './components/Uebersicht';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+
+
+function App(){
+  return(
+  
+      <Routes>
+        <Route path="/LoginPage" element={<LoginPage/>} />
+        <Route path="/Uebersicht" element={<Uebersicht/>} /> {/* Define a route for Uebersicht */}
+        {/* Other routes for additional pages, if needed */}
+      </Routes>
+  )
+}
+
+export default App;
+
+/*
+<main className='App'>
+      <LoginPage/>
+
+    </main>
+*/ 
+/*
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <h1>Klask App Components here</h1>
+     <TurnierCaller />
     </div>
   );
 }
 
-export default App;
+export default App;*/
