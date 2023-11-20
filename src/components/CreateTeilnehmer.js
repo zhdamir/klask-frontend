@@ -50,7 +50,7 @@ const CreateTeilnehmer = () => {
       if (response.ok) {
         // Teilnehmer created successfully
         // You may redirect or show a success message here
-        navigate("/Uebersicht");
+        navigate("/SpielerUebersicht");
       } else {
         // Handle error, show error message, etc.
         console.error('Error creating Teilnehmer:', response.statusText);
