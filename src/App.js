@@ -4,6 +4,7 @@ import './style.css';
 import LoginPage from './components/LoginPage';
 import Uebersicht from './components/Uebersicht';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import CreateTeilnehmer from './components/CreateTeilnehmer';
 
 
 
@@ -14,7 +15,11 @@ function App(){
         <Route path="/LoginPage" element={<LoginPage/>} />
         <Route path="/Uebersicht" element={<Uebersicht/>} /> {/* Define a route for Uebersicht */}
         {/* Other routes for additional pages, if needed */}
+        <Route path="/CreateTeilnehmer" element={<CreateTeilnehmer/>} /> {/* Define a route for CreateTeilnehmer */}
+
       </Routes>
+     
+      
   )
 }
 
