@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CreateTeilnehmer = () => {
   const [vorname, setVorname] = useState('');
@@ -8,6 +9,7 @@ const CreateTeilnehmer = () => {
   const [selectedRolle, setSelectedRolle] = useState('');
   const [bereiche, setBereiche] = useState([]);
   const [rollen, setRollen] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +50,7 @@ const CreateTeilnehmer = () => {
       if (response.ok) {
         // Teilnehmer created successfully
         // You may redirect or show a success message here
+        navigate("/Uebersicht");
       } else {
         // Handle error, show error message, etc.
         console.error('Error creating Teilnehmer:', response.statusText);
