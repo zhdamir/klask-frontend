@@ -1,52 +1,68 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from 'react';
 
+function SpielerUebersicht() {
+  const [teilnehmerList, setTeilnehmerList] = useState([]);
 
- function Uebersicht(){
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5222/api/teilnehmer');
+        const data = await response.json();
 
-    const[teilnehmerListe, setTeilnehmerListe]=useState([]);
+        // daten für jeden Teilnehmer holen
+        const enrichedData = await Promise.all(
+          data.map(async (teilnehmer) => {
+            const bereichResponse = await fetch(`http://localhost:5222/api/bereich/${teilnehmer.bereichId}`);
+            const bereichData = await bereichResponse.json();
 
-    useEffect(()=>{
-        const fetchData=async()=>{
-            try{
-                const response = await fetch('http://localhost:5222/api/teilnehmer');
-                const data = await response.json();
-                setTeilnehmerListe(data);
-            }catch(error){
-                console.error("Fehler beim Datenholen!S");
-            }
-        };
+            const rolleResponse = await fetch(`http://localhost:5222/api/benutzerrolle/${teilnehmer.rolleId}`);
+            const rolleData = await rolleResponse.json();
 
-        fetchData();
-    },[]);
+            return {
+              ...teilnehmer,
+              bereichName: bereichData.bereichName,
+              bezeichnungRolle: rolleData.bezeichnungRolle,
+            };
+          })
+        );
 
-    return(
-        <div>
-      <h1>Das ist Übersicht</h1>
+        setTeilnehmerList(enrichedData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <h1>List of Teilnehmer</h1>
       <table>
         <thead>
           <tr>
             <th>Vorname</th>
             <th>Nachname</th>
             <th>Email</th>
-            <th>Bereich</th>
-            <th>Rolle</th>
+            <th>BereichName</th>
+            <th>BezeichnungRolle</th>
           </tr>
         </thead>
         <tbody>
-          {teilnehmerListe.map((teilnehmer) => (
+          {teilnehmerList.map((teilnehmer) => (
             <tr key={teilnehmer.teilnehmerId}>
               <td>{teilnehmer.vorname}</td>
               <td>{teilnehmer.nachname}</td>
               <td>{teilnehmer.email}</td>
-              <td>{teilnehmer.bereich?.bereichName}</td>
-              <td>{teilnehmer.rolle?.bezeichnungRolle}</td>
+              <td>{teilnehmer.bereichName}</td>
+              <td>{teilnehmer.bezeichnungRolle}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-    )
+  );
 }
 
+export default SpielerUebersicht;
 
-export default Uebersicht;

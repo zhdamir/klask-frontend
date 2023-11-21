@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const CreateTeilnehmer = () => {
+const TeilnehmerAnlegen = () => {
   const [vorname, setVorname] = useState('');
   const [nachname, setNachname] = useState('');
   const [email, setEmail] = useState('');
@@ -102,4 +102,4 @@ const CreateTeilnehmer = () => {
   );
 };
 
-export default CreateTeilnehmer;
+export default TeilnehmerAnlegen;
