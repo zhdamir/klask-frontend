@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 function SpielerUebersicht() {
   const [teilnehmerList, setTeilnehmerList] = useState([]);
-
+//Test
   useEffect(() => {
     const fetchData = async () => {
       try {
