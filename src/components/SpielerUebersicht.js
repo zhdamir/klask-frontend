@@ -58,12 +58,12 @@ function SpielerUebersicht() {
   };
 
   const handleUpdateTeilnehmer = (teilnehmerId, updatedTeilnehmer) => {
-    // State aktualieseren (mit aktualiosertem teilnehmer) 
-    setTeilnehmerList((prevList) =>
-      prevList.map((teilnehmer) =>
+    setTeilnehmerList((prevList) => {
+      const updatedList = prevList.map((teilnehmer) =>
         teilnehmer.teilnehmerId === teilnehmerId ? { ...teilnehmer, ...updatedTeilnehmer } : teilnehmer
-      )
-    );
+      );
+      return updatedList;
+    });
   };
 
   return (
@@ -81,7 +81,13 @@ function SpielerUebersicht() {
           </tr>
         </thead>
         <tbody>
-          {teilnehmerList.map((teilnehmer) => (
+          {/*teilnehmerList
+            .sort((a, b) => a.teilnehmerId - b.teilnehmerId) // Sort by teilnehmerId*/
+            /*teilnehmerList
+  .sort((a, b) => a.nachname.localeCompare(b.nachname)) // Sort by last name*/
+            teilnehmerList
+            .sort((a, b) => a.vorname.localeCompare(b.vorname)) // Sort by first name
+            .map((teilnehmer) => (
             <tr key={teilnehmer.teilnehmerId}>
               <td>{teilnehmer.vorname}</td>
               <td>{teilnehmer.nachname}</td>
