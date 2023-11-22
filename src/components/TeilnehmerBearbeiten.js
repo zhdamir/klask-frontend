@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 
+/*props als Parameter: open (boolean, ob das Modal geöffnet ist oder nicht), 
+onClose (Funktion Modal schließen), teilnehmer (zu bearbeitender Teilnehmer), 
+onUpdateTeilnehmer (func zum Aktualisieren der Teilnehmerdaten), 
+bereichOptions (Optionen für Dropdown "Bereich") und rolleOptions (Optionen für das Dropdown "Rolle"). */
 const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, bereichOptions, rolleOptions }) => {
+  
+  /*die bearbeiteten Daten des Teilnehmers, die im Modal angezeigt werden. */
   const [editedTeilnehmer, setEditedTeilnehmer] = useState({});
 
+  /*den Zustand "editedTeilnehmer" aktualisieren, wenn sich die teilnehmer prop ändert. 
+  Er setzt den Ausgangszustand für den bearbeiteten Teilnehmer auf der Grundlage der über props empfangenen Daten. */
   useEffect(() => {
     setEditedTeilnehmer({
       vorname: teilnehmer?.vorname || '',
@@ -24,7 +32,7 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
         /*
         body: JSON.stringify(editedTeilnehmer),*/
         body: JSON.stringify({
-        teilnehmerId: teilnehmer.teilnehmerId, // Make sure you include this line
+        teilnehmerId: teilnehmer.teilnehmerId, 
         ...editedTeilnehmer,
       }),
       });

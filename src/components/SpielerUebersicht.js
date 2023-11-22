@@ -49,7 +49,8 @@ function SpielerUebersicht() {
     };
 
     fetchData();
-  }, []);
+  }, [teilnehmerList]);//teilnehmerList hinzugefügt
+  //now useEffect runs whenever teilnehmerList changes
 
   const handleEditClick = (teilnehmer) => {
     setSelectedTeilnehmer(teilnehmer);
