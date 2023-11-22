@@ -78,7 +78,7 @@ const TeilnehmerAnlegen = () => {
       <div>
         <label>Bereich:</label>
         <select value={selectedBereich} onChange={(e) => setSelectedBereich(e.target.value)}>
-          <option value="" disabled>Select Bereich</option>
+          <option value="" disabled>Bereich wählen</option>
           {bereiche.map((bereich) => (
             <option key={bereich.bereichId} value={bereich.bereichId}>
               {bereich.bereichName}
@@ -89,7 +89,7 @@ const TeilnehmerAnlegen = () => {
       <div>
         <label>Rolle:</label>
         <select value={selectedRolle} onChange={(e) => setSelectedRolle(e.target.value)}>
-          <option value="" disabled>Select Rolle</option>
+          <option value="" disabled>Rolle wählen</option>
           {rollen.map((rolle) => (
             <option key={rolle.rolleId} value={rolle.rolleId}>
               {rolle.bezeichnungRolle}

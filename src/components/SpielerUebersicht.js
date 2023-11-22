@@ -68,7 +68,7 @@ function SpielerUebersicht() {
 
   return (
     <div>
-      <h1>List of Teilnehmer</h1>
+      <h1>Teilnehmerliste</h1>
       <table>
         <thead>
           <tr>

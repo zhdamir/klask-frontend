@@ -69,7 +69,7 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
        
         <label className="label4">Bereich:</label>
         <select className="input-box4" value={editedTeilnehmer.bereichId} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, bereichId: e.target.value })}>
-          <option value="" disabled>Select Bereich</option>
+          <option value="" disabled>Bereich wählen</option>
           {bereichOptions.map((bereich) => (
             <option key={bereich.bereichId} value={bereich.bereichId}>
               {bereich.bereichName}
@@ -80,7 +80,7 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
        
         <label className="label5">Rolle:</label>
         <select className="input-box5" value={editedTeilnehmer.rolleId} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, rolleId: e.target.value })}>
-          <option value="" disabled>Select Rolle</option>
+          <option value="" disabled>Rolle wählen</option>
           {rolleOptions.map((rolle) => (
             <option key={rolle.rolleId} value={rolle.rolleId}>
               {rolle.bezeichnungRolle}
