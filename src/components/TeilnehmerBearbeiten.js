@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
+import "../TeilnehmerBearbeiten.css";
 
 /*props als Parameter: open (boolean, ob das Modal geöffnet ist oder nicht), 
 onClose (Funktion Modal schließen), teilnehmer (zu bearbeitender Teilnehmer), 
@@ -50,18 +51,24 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
   };
 
   return (
-    <Modal isOpen={open} onRequestClose={onClose}>
-      <div>
-        <h2>Edit Teilnehmer</h2>
-        <label>Vorname:</label>
-        <input type="text" value={editedTeilnehmer.vorname} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, vorname: e.target.value })} />
-        <label>Nachname:</label>
-        <input type="text" value={editedTeilnehmer.nachname} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, nachname: e.target.value })} />
-        <label>Email:</label>
-        <input type="text" value={editedTeilnehmer.email} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, email: e.target.value })} />
-
-        <label>Bereich:</label>
-        <select value={editedTeilnehmer.bereichId} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, bereichId: e.target.value })}>
+    <Modal className="bearbeiten-modal" isOpen={open} onRequestClose={onClose}>
+      <div className="bearbeiten-content">
+        <h2 className="ueberschrift-bearbeiten">Teilnehmer bearbeiten</h2>
+       
+          <label className="label1">Vorname:</label>
+          <input className="input-box1" type="text" value={editedTeilnehmer.vorname} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, vorname: e.target.value })} />
+       
+       
+          <label className="label2">Nachname:</label>
+          <input className="input-box2" type="text" value={editedTeilnehmer.nachname} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, nachname: e.target.value })} />
+        
+       
+        <label className="label3">Email:</label>
+        <input className="input-box3" type="text" value={editedTeilnehmer.email} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, email: e.target.value })} />
+       
+       
+        <label className="label4">Bereich:</label>
+        <select className="input-box4" value={editedTeilnehmer.bereichId} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, bereichId: e.target.value })}>
           <option value="" disabled>Select Bereich</option>
           {bereichOptions.map((bereich) => (
             <option key={bereich.bereichId} value={bereich.bereichId}>
@@ -69,9 +76,10 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
             </option>
           ))}
         </select>
-
-        <label>Rolle:</label>
-        <select value={editedTeilnehmer.rolleId} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, rolleId: e.target.value })}>
+        
+       
+        <label className="label5">Rolle:</label>
+        <select className="input-box5" value={editedTeilnehmer.rolleId} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, rolleId: e.target.value })}>
           <option value="" disabled>Select Rolle</option>
           {rolleOptions.map((rolle) => (
             <option key={rolle.rolleId} value={rolle.rolleId}>
@@ -79,10 +87,13 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
             </option>
           ))}
         </select>
-
-        <button onClick={handleSave}>Speichern</button>
-        <button onClick={onClose}>Abbrechen</button>
+        
+       
+          <button className="btn-speichern" onClick={handleSave}>Speichern</button>
+          <button className="btn-abbrechen" onClick={onClose}>Abbrechen</button>
       </div>
+          
+    
     </Modal>
   );
 };
