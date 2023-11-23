@@ -2,9 +2,11 @@ import React from 'react';
 //import TurnierCaller from './components/TurnierCaller';
 import './style.css';
 import LoginPage from './components/LoginPage';
-import Uebersicht from './components/SpielerUebersicht';
+import SpielerUebersicht from './components/SpielerUebersicht';
+import Uebersicht from './components/Uebersicht';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import TeilnehmerAnlegen from './components/TeilnehmerAnlegen';
+import TurnierAnlegen from './components/TurnierAnlegen';
 
 
 
@@ -13,9 +15,11 @@ function App(){
   
       <Routes>
         <Route path="/LoginPage" element={<LoginPage/>} />
-        <Route path="/SpielerUebersicht" element={<Uebersicht/>} /> {/* Define a route for Uebersicht */}
+        <Route path="/SpielerUebersicht" element={<SpielerUebersicht/>} /> {/* Define a route for SpielerUebersicht */}
+        <Route path="/Uebersicht" element={<Uebersicht/>} /> {/* Define a route for Uebersicht */}
         {/* Other routes for additional pages, if needed */}
         <Route path="/TeilnehmerAnlegen" element={<TeilnehmerAnlegen/>} /> {/* Define a route for CreateTeilnehmer */}
+        <Route path="/TurnierAnlegen" element={<TurnierAnlegen/>} /> {/* Define a route for CreateTeilnehmer */}
 
       </Routes>
      
