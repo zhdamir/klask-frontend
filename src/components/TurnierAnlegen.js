@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TeilnehmerlisteDialog from './TeilnehmerlisteDialog';
 
 const TurnierAnlegen = () => {
   const [turnierTitel, setTurnierTitel] = useState('');
   const [startDatum, setStartDatum] = useState('');
   const [endDatum, setEndDatum] = useState('');
   const [anzahlGruppen, setAnzahlGruppen] = useState('');
-  const [selectedTeilnehmer, setSelectedTeilnehmer] = useState('');
-  const [teilnehmer, setTeilnehmer] = useState([]);
- 
+  
+  // State to manage the visibility of the TeilnehmerlisteDialog
+  const [teilnehmerDialogOpen, setTeilnehmerDialogOpen] = useState(false);
+
+  // State to store the list of Teilnehmer
+  const [teilnehmerList, setTeilnehmerList] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +22,7 @@ const TurnierAnlegen = () => {
         // Fetch Teilnehmer data
         const teilnehmerResponse = await fetch('http://localhost:5222/api/teilnehmer');
         const teilnehmerData = await teilnehmerResponse.json();
-        setTeilnehmer(teilnehmerData);
+        setTeilnehmerList(teilnehmerData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -51,6 +56,16 @@ const TurnierAnlegen = () => {
       console.error('Error creating Teilnehmer:', error);
     }
   };
+// Handler to open the TeilnehmerlisteDialog
+const handleTeilnehmerListeClick = () => {
+  setTeilnehmerDialogOpen(true);
+};
+
+// Handler to handle selected Teilnehmer from the dialog
+const handleTeilnehmerSelect = (selectedTeilnehmer) => {
+  // Handle selected Teilnehmer logic here
+  console.log('Selected Teilnehmer:', selectedTeilnehmer);
+};
 
   return (
     <div>
@@ -73,16 +88,17 @@ const TurnierAnlegen = () => {
       </div>
       <div>
         <label>Teilnehmerliste:</label>
-        <select value={selectedTeilnehmer} onChange={(e) => setSelectedTeilnehmer(e.target.value)}>
-          <option value="" disabled>Teilnehmer wählen</option>
-          {teilnehmer.map((teilnehmer) => (
-            <option key={teilnehmer.teilnehmerId} value={teilnehmer.teilnehmerId}>
-              {teilnehmer.vorname +" "+teilnehmer.nachname}
-            </option>
-          ))}
-        </select>
+        <td>
+            <button onClick={handleTeilnehmerListeClick}>Teilnehmerliste</button>
+        </td>
+        {/* TeilnehmerlisteDialog */}
+      <TeilnehmerlisteDialog
+        open={teilnehmerDialogOpen}
+        onClose={() => setTeilnehmerDialogOpen(false)}
+        onSelectTeilnehmer={handleTeilnehmerSelect}
+        teilnehmerList={teilnehmerList}
+      />
       </div>
-      
       <button onClick={handleCreateTurnier}>Turnier anlegen</button>
     </div>
   );

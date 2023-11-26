@@ -9,10 +9,8 @@ import TeilnehmerAnlegen from './components/TeilnehmerAnlegen';
 import TurnierAnlegen from './components/TurnierAnlegen';
 
 
-
 function App(){
   return(
-  
       <Routes>
         <Route path="/LoginPage" element={<LoginPage/>} />
         <Route path="/SpielerUebersicht" element={<SpielerUebersicht/>} /> {/* Define a route for SpielerUebersicht */}
@@ -20,29 +18,10 @@ function App(){
         {/* Other routes for additional pages, if needed */}
         <Route path="/TeilnehmerAnlegen" element={<TeilnehmerAnlegen/>} /> {/* Define a route for CreateTeilnehmer */}
         <Route path="/TurnierAnlegen" element={<TurnierAnlegen/>} /> {/* Define a route for CreateTeilnehmer */}
-
       </Routes>
-     
-      
   )
 }
 
 export default App;
 
-/*
-<main className='App'>
-      <LoginPage/>
 
-    </main>
-*/ 
-/*
-function App() {
-  return (
-    <div className="App">
-     <h1>Klask App Components here</h1>
-     <TurnierCaller />
-    </div>
-  );
-}
-
-export default App;*/

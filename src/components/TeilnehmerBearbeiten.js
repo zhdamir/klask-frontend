@@ -87,8 +87,6 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
             </option>
           ))}
         </select>
-        
-       
           <button className="btn-speichern" onClick={handleSave}>Speichern</button>
           <button className="btn-abbrechen" onClick={onClose}>Abbrechen</button>
       </div>
