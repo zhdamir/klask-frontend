@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TeilnehmerlisteDialog from './TeilnehmerlisteDialog';
-
 const TurnierAnlegen = () => {
   const [turnierTitel, setTurnierTitel] = useState('');
   const [startDatum, setStartDatum] = useState('');
@@ -56,16 +54,8 @@ const TurnierAnlegen = () => {
       console.error('Error creating Teilnehmer:', error);
     }
   };
-// Handler to open the TeilnehmerlisteDialog
-const handleTeilnehmerListeClick = () => {
-  setTeilnehmerDialogOpen(true);
-};
 
-// Handler to handle selected Teilnehmer from the dialog
-const handleTeilnehmerSelect = (selectedTeilnehmer) => {
-  // Handle selected Teilnehmer logic here
-  console.log('Selected Teilnehmer:', selectedTeilnehmer);
-};
+
 
   return (
     <div>
@@ -85,19 +75,6 @@ const handleTeilnehmerSelect = (selectedTeilnehmer) => {
       <div>
         <label>Anzahl Gruppen:</label>
         <input type="text" value={anzahlGruppen} onChange={(e) => setAnzahlGruppen(e.target.value)} />
-      </div>
-      <div>
-        <label>Teilnehmerliste:</label>
-        <td>
-            <button onClick={handleTeilnehmerListeClick}>Teilnehmerliste</button>
-        </td>
-        {/* TeilnehmerlisteDialog */}
-      <TeilnehmerlisteDialog
-        open={teilnehmerDialogOpen}
-        onClose={() => setTeilnehmerDialogOpen(false)}
-        onSelectTeilnehmer={handleTeilnehmerSelect}
-        teilnehmerList={teilnehmerList}
-      />
       </div>
       <button onClick={handleCreateTurnier}>Turnier anlegen</button>
     </div>

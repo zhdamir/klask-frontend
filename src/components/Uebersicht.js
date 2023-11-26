@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import TeilnehmerlisteDialog from './TeilnehmerlisteDialog';
 
+import "../Uebersicht.css";
+
 function Uebersicht() {
   const [turnierList, setTurnierList] = useState([]);
   const [teilnehmerDialogOpen, setTeilnehmerDialogOpen] = useState(false);
@@ -51,6 +53,11 @@ function Uebersicht() {
   }
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('de-DE', options);
+  };
+
   
   return (
     <div>
@@ -58,10 +65,11 @@ function Uebersicht() {
       <table>
         <thead>
           <tr>
-            <th>Turniertitel</th>
-            <th>Startdatum</th>
-            <th>Enddatum</th>
-            <th>Anzahl Gruppen</th>
+            <th className="cellWithSpace">Turniertitel</th>
+            <th className="cellWithSpace">Startdatum</th>
+            <th className="cellWithSpace">Enddatum</th>
+            <th className="cellWithSpace">Anzahl Gruppen</th>
+            <th className="cellWithSpace">Teilnehmer Hinzufügen</th>
           </tr>
         </thead>
         <tbody>
@@ -69,12 +77,12 @@ function Uebersicht() {
             .sort((a, b) => a.id - b.id)
             .map((turnier) => (
               <tr key={turnier.id}>
-                <td>{turnier.turnierTitel}</td>
-                <td>{turnier.startDatum}</td>
-                <td>{turnier.endDatum}</td>
-                <td>{turnier.anzahlGruppen}</td>
+                <td className="cellWithSpace">{turnier.turnierTitel}</td>
+                <td className="cellWithSpace">{formatDate(turnier.startDatum)}</td>
+                <td className="cellWithSpace">{formatDate(turnier.endDatum)}</td>
+                <td className="cellWithSpace">{turnier.anzahlGruppen}</td>
                 <td>
-                  <button onClick={() => handleTeilnehmerListeClick(turnier)}>Teilnehmer hinzufügen</button>
+                  < button className="cellWithSpace" onClick={() => handleTeilnehmerListeClick(turnier)}>Teilnehmer hinzufügen</button>
                 </td>
               </tr>
             ))}
