@@ -5,6 +5,7 @@ const TurnierAnlegen = () => {
   const [startDatum, setStartDatum] = useState('');
   const [endDatum, setEndDatum] = useState('');
   const [anzahlGruppen, setAnzahlGruppen] = useState('');
+  const [isActive, setIsActive] = useState(false);
   
   // State to manage the visibility of the TeilnehmerlisteDialog
   const [teilnehmerDialogOpen, setTeilnehmerDialogOpen] = useState(false);
@@ -39,13 +40,14 @@ const TurnierAnlegen = () => {
           turnierTitel,
           startDatum,
           endDatum,
-          anzahlGruppen
+          anzahlGruppen,
+          isActive: JSON.parse(isActive), // Convert to boolean
         }),
       });
 
       if (response.ok) {
         // Turnier created successfully
-        navigate("/Uebersicht");
+        navigate("/TurnierUebersicht");
       } else {
         // Handle error, show error message, etc.
         console.error('Error creating Turnier:', response.statusText);
@@ -76,6 +78,14 @@ const TurnierAnlegen = () => {
         <label>Anzahl Gruppen:</label>
         <input type="text" value={anzahlGruppen} onChange={(e) => setAnzahlGruppen(e.target.value)} />
       </div>
+      
+      <div>
+        <label>Status:</label>
+        <select value={isActive} onChange={(e) => setIsActive(e.target.value)}>
+          <option value="true">Active</option>
+          <option value="false">Inactive</option>
+        </select>
+  </div>
       <button onClick={handleCreateTurnier}>Turnier anlegen</button>
     </div>
   );

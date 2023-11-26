@@ -1,25 +1,14 @@
 // Uebersicht.jsx
 
 import React, { useState, useEffect } from 'react';
-import TeilnehmerlisteDialog from './TeilnehmerlisteDialog';
-
 import "../Uebersicht.css";
 
 function Uebersicht() {
-  const [turnierList, setTurnierList] = useState([]);
-  const [teilnehmerDialogOpen, setTeilnehmerDialogOpen] = useState(false);
-  const [selectedTurnier, setSelectedTurnier] = useState(null);
-  const [teilnehmerList, setTeilnehmerList] = useState([]);
+    const [turnierList, setTurnierList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-
-        // Fetch Teilnehmer data
-        const teilnehmerResponse = await fetch('http://localhost:5222/api/teilnehmer');
-        const teilnehmerData = await teilnehmerResponse.json();
-        setTeilnehmerList(teilnehmerData);
-
         //fetch Turnier Data
         const turnierResponse = await fetch('http://localhost:5222/api/turnier');
         const turnierData = await turnierResponse.json();
@@ -42,22 +31,14 @@ function Uebersicht() {
     fetchData();
   }, []);// Dependency array should be empty, as we only want to fetch data once on component mount
 
-  const handleTeilnehmerListeClick = (turnier) => {
-    // Check if turnier is not null before setting the selectedTurnier
-  if (turnier) {
-    setSelectedTurnier(turnier);
-    //console.log("Turnier selected method hanldeTeilnehmerListeClick"+turnier);
-    setTeilnehmerDialogOpen(true);
-  } else {
-    console.error('Error: Selected turnier is null.');
-  }
-  };
-
+  
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('de-DE', options);
   };
 
+  //Filter only active tournaments
+  const activeTurnierList = turnierList.filter((turnier) => turnier.isActive);
   
   return (
     <div>
@@ -69,11 +50,11 @@ function Uebersicht() {
             <th className="cellWithSpace">Startdatum</th>
             <th className="cellWithSpace">Enddatum</th>
             <th className="cellWithSpace">Anzahl Gruppen</th>
-            <th className="cellWithSpace">Teilnehmer Hinzufügen</th>
+            <th className="cellWithSpace">Status</th>
           </tr>
         </thead>
         <tbody>
-          {turnierList
+          {activeTurnierList
             .sort((a, b) => a.id - b.id)
             .map((turnier) => (
               <tr key={turnier.id}>
@@ -81,22 +62,12 @@ function Uebersicht() {
                 <td className="cellWithSpace">{formatDate(turnier.startDatum)}</td>
                 <td className="cellWithSpace">{formatDate(turnier.endDatum)}</td>
                 <td className="cellWithSpace">{turnier.anzahlGruppen}</td>
-                <td>
-                  < button className="cellWithSpace" onClick={() => handleTeilnehmerListeClick(turnier)}>Teilnehmer hinzufügen</button>
-                </td>
+                <td className="cellWithSpace">{turnier.isActive? 'Aktiv':'Inaktiv'}</td>
+               
               </tr>
             ))}
         </tbody>
       </table>
-
-      {teilnehmerDialogOpen && (
-        <TeilnehmerlisteDialog
-          open={teilnehmerDialogOpen}
-          onClose={() => setTeilnehmerDialogOpen(false)}
-          teilnehmerList={teilnehmerList}
-          turnier={selectedTurnier}
-        />
-      )}
     </div>
   );
 }
