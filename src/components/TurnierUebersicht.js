@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import TeilnehmerlisteDialog from './TeilnehmerlisteDialog';
+import { useNavigate } from 'react-router-dom';
 
 import "../TurnierUebersicht.css";
 
@@ -10,6 +11,7 @@ function TurnierUebersicht() {
   const [teilnehmerDialogOpen, setTeilnehmerDialogOpen] = useState(false);
   const [selectedTurnier, setSelectedTurnier] = useState(null);
   const [teilnehmerList, setTeilnehmerList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +60,30 @@ function TurnierUebersicht() {
     return new Date(dateString).toLocaleDateString('de-DE', options);
   };
 
+  const handleStartClick = async (turnierId) => {
+    try {
+      const response = await fetch(`http://localhost:5222/api/turnier/startTurnier?turnierId=${turnierId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        // Handle success, e.g., redirect to Uebersicht page
+       navigate("/TurnierUebersicht");
+        console.log('Turnier started successfully');
+      } else {
+        // Handle error, e.g., show an error message
+        console.error('Error starting turnier:', response.statusText);
+      }
+    } catch (error) {
+      // Handle exceptions appropriately
+      console.error('Error starting turnier:', error.message);
+    }
+  };
+  
+
   
   return (
     <div>
@@ -91,7 +117,7 @@ function TurnierUebersicht() {
                   < button className="cellWithSpace" onClick={() => handleTeilnehmerListeClick(turnier)}>Teilnehmer hinzufügen</button>
                 </td>
                 <td>
-                  < button className="cellWithSpace" onClick={''}>Start</button>
+                  < button className="cellWithSpace" onClick={()=>handleStartClick(turnier.id)}>Start</button>
                 </td>
                 <td>
                   < button className="cellWithSpace" onClick={''}>Vorrunde</button>
