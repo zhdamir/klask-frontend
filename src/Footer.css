@@ -1,0 +1,8 @@
+.footer{
+    background-color: rgb(7, 31, 59);
+    display: flex;
+}
+
+.info{
+    margin: 50px;
+}

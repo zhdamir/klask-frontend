@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../TurnierAnlegen.css';
 const TurnierAnlegen = () => {
   const [turnierTitel, setTurnierTitel] = useState('');
   const [startDatum, setStartDatum] = useState('');
@@ -86,7 +87,7 @@ const TurnierAnlegen = () => {
           <option value="false">Inactive</option>
         </select>
   </div>
-      <button onClick={handleCreateTurnier}>Turnier anlegen</button>
+      <button className="create-turnier" onClick={handleCreateTurnier}>Turnier anlegen</button>
     </div>
   );
 };

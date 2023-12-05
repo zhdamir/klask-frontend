@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../TeilnehmerAnlegen.css';
 
 const TeilnehmerAnlegen = () => {
   const [vorname, setVorname] = useState('');
