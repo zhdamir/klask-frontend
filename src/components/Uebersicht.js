@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import '../Uebersicht.css';
 
 function Uebersicht() {
   const [turnierList, setTurnierList] = useState([]);
-  const [gruppenrundenDetails, setgruppenrundenDetails] = useState([]);
+  const [gruppenrundenDetails, setGruppenrundenDetails] = useState([]);
   const [gruppenDetails, setGruppenDetails] = useState([]);
   const [activeTurnierFound, setActiveTurnierFound] = useState(true);
+  const [scores, setScores] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -13,7 +17,7 @@ function Uebersicht() {
         // Fetch all Turniere
         const turnierResponse = await fetch('http://localhost:5222/api/turnier');
         const turnierData = await turnierResponse.json();
-        
+
         // Find the active Turnier
         const activeTurnierList = turnierData.filter((turnier) => turnier.isActive);
 
@@ -29,25 +33,69 @@ function Uebersicht() {
         // Fetch turnier details (groups with participants) for the active Turnier
         const gruppenResponse = await fetch('http://localhost:5222/api/turnier/currentTurnierDetails');
         const gruppenData = await gruppenResponse.json();
-        console.log('Gruppenrunden Details:', gruppenData);
+        console.log('Gruppen Details:', gruppenData);
         setGruppenDetails(gruppenData);
 
         // Fetch turnier details (groups with participants) for the active Turnier
         const detailsResponse = await fetch('http://localhost:5222/api/turnier/gruppenrundenDetails');
         const detailsData = await detailsResponse.json();
         console.log('Gruppenrunden Details:', detailsData);
-        setgruppenrundenDetails(detailsData);
+        setGruppenrundenDetails(detailsData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [scores]);
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('de-DE', options);
+  };
+
+  const handleUpdatePunkte = async (spieleTeilnehmerId, neuePunkte) => {
+    try {
+      const response = await fetch(`http://localhost:5222/api/spielteilnehmer/updatePunkte/${spieleTeilnehmerId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(neuePunkte),
+      });
+
+      if (response.ok) {
+        // Handle success, e.g., redirect to Uebersicht page
+        navigate('/Uebersicht');
+        console.log('Punkte updated successfully');
+      } else {
+        // Handle error, e.g., show an error message
+        console.error('Error updating punkte:', response.statusText);
+      }
+    } catch (error) {
+      // Handle exceptions appropriately
+      console.error('Error updating punkte:', error.message);
+    }
+  };
+
+  const handleSubmitScores = async () => {
+    try {
+      // Loop through the scores and submit each score
+      for (const [spielTeilnehmerId, score] of Object.entries(scores)) {
+        console.log('Scores to submit:', scores);
+
+        // Convert score to an integer before sending
+        const parsedScore = parseInt(score, 10);
+
+        // Call the update punkte function
+        await handleUpdatePunkte(spielTeilnehmerId, parsedScore);
+      }
+      // Optional: Reset scores after submission
+      setScores({});
+      console.log('Scores submitted successfully');
+    } catch (error) {
+      console.error('Error submitting scores:', error);
+    }
   };
 
   // Create a map to group Teilnehmer based on group
@@ -59,34 +107,12 @@ function Uebersicht() {
     return acc;
   }, {});
 
-
-  //Submit scores
-  // Inside your component function
-const submitScores = async (teilnehmer1Id, teilnehmer2Id, score) => {
-  try {
-    const response = await fetch('http://localhost:5222/api/spielteilnehmer', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        Teilnehmer1Id: teilnehmer1Id,
-        Teilnehmer2Id: teilnehmer2Id,
-        Punkte: score,
-        // Add any other required data
-      }),
+  const handleScoreChange = (spielTeilnehmerId, value) => {
+    setScores({
+      ...scores,
+      [spielTeilnehmerId]: value,
     });
-
-    if (response.ok) {
-      console.log('Scores submitted successfully');
-      // You may want to update the local state after a successful submission
-    } else {
-      console.error('Failed to submit scores');
-    }
-  } catch (error) {
-    console.error('Error submitting scores:', error);
-  }
-};
+  };
 
   return (
     <div>
@@ -167,12 +193,42 @@ const submitScores = async (teilnehmer1Id, teilnehmer2Id, score) => {
                     groupTeilnehmer.map((teilnehmer2, innerIndex) => {
                       // Check for duplicate pairs
                       if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
+                        const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
+                        const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
+
+                        const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte; // Use default score if not in scores
+                        const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte; // Use default score if not in scores
+
                         return (
                           <tr key={index + '-' + innerIndex}>
                             <td className="cellWithSpace">{teilnehmer1.vorname}</td>
                             <td className="cellWithSpace">{teilnehmer2.vorname}</td>
-                            <td className="cellWithSpace">{teilnehmer1.punkte !== null ? teilnehmer1.punkte : ''}</td>
-                            <td className="cellWithSpace">{teilnehmer2.punkte !== null ? teilnehmer2.punkte : ''}</td>
+                            <td className="cellWithSpace">
+                              <select
+                               value={score1 === null ? "" : score1}
+                                onChange={(e) => handleScoreChange(spielTeilnehmerId1, e.target.value)}
+                              >
+                                <option value="" disabled>
+                                  Select Score
+                                </option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                              </select>
+                            </td>
+                            <td className="cellWithSpace">
+                              <select
+                                value={score2 === null ? "" : score2}
+                                onChange={(e) => handleScoreChange(spielTeilnehmerId2, e.target.value)}
+                              >
+                                <option value="" disabled>
+                                  Select Score
+                                </option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                              </select>
+                            </td>
                           </tr>
                         );
                       }
@@ -183,6 +239,9 @@ const submitScores = async (teilnehmer1Id, teilnehmer2Id, score) => {
               </table>
             </div>
           ))}
+
+          {/* Button to submit scores */}
+          <button onClick={handleSubmitScores}>Submit Scores</button>
         </>
       ) : (
         <p>No active Turnier found.</p>

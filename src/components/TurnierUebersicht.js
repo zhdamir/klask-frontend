@@ -77,6 +77,7 @@ function TurnierUebersicht() {
         // Handle error, e.g., show an error message
         console.error('Error starting turnier:', response.statusText);
       }
+      navigate("/TurnierUebersicht");
     } catch (error) {
       // Handle exceptions appropriately
       console.error('Error starting turnier:', error.message);
