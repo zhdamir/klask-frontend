@@ -10,6 +10,7 @@ function Uebersicht() {
   const [activeTurnierFound, setActiveTurnierFound] = useState(true);
   const [scores, setScores] = useState({});
   const navigate = useNavigate();
+  const [vorrundenDetails, setVorrundenDetails] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +42,12 @@ function Uebersicht() {
         const detailsData = await detailsResponse.json();
         console.log('Gruppenrunden Details:', detailsData);
         setGruppenrundenDetails(detailsData);
+
+        // Fetch vorrunden details for the active Turnier
+        const vorrundenResponse = await fetch('http://localhost:5222/api/runde/vorrundenDetails');
+        const vorrundenData = await vorrundenResponse.json();
+        console.log('Gruppenrunden Details:', vorrundenData);
+        setVorrundenDetails(vorrundenData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -209,7 +216,7 @@ function Uebersicht() {
                                 onChange={(e) => handleScoreChange(spielTeilnehmerId1, e.target.value)}
                               >
                                 <option value="" disabled>
-                                  Select Score
+                                 Punkte
                                 </option>
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -222,7 +229,7 @@ function Uebersicht() {
                                 onChange={(e) => handleScoreChange(spielTeilnehmerId2, e.target.value)}
                               >
                                 <option value="" disabled>
-                                  Select Score
+                                  Punkte
                                 </option>
                                 <option value="0">0</option>
                                 <option value="1">1</option>
@@ -237,6 +244,7 @@ function Uebersicht() {
                   ))}
                 </tbody>
               </table>
+
             </div>
           ))}
 
@@ -246,6 +254,70 @@ function Uebersicht() {
       ) : (
         <p>No active Turnier found.</p>
       )}
+
+
+              {/* Display vorrundenDetails */}
+<h2>Vorrunden</h2>
+<table>
+  <thead>
+    <tr>
+      {/* Add headers for vorrundenDetails */}
+      <th className="cellWithSpace">Teilnehmer 1</th>
+      <th className="cellWithSpace">Teilnehmer 2</th>
+      <th className="cellWithSpace">Punkte 1</th>
+      <th className="cellWithSpace">Punkte 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    {vorrundenDetails.map((teilnehmer1, index) => (
+      // Iterate over Teilnehmer pairs
+      vorrundenDetails.map((teilnehmer2, innerIndex) => {
+        // Check for duplicate pairs
+        if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
+          const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
+          const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
+
+          const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte;
+          const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte;
+
+          return (
+            <tr key={index + '-' + innerIndex}>
+              <td className="cellWithSpace">{teilnehmer1.vorname}</td>
+              <td className="cellWithSpace">{teilnehmer2.vorname}</td>
+              <td className="cellWithSpace">
+                <select
+                  value={score1 === null ? "" : score1}
+                  onChange={(e) => handleScoreChange(spielTeilnehmerId1, e.target.value)}
+                >
+                  <option value="" disabled>
+                    Punkte
+                  </option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </td>
+              <td className="cellWithSpace">
+                <select
+                  value={score2 === null ? "" : score2}
+                  onChange={(e) => handleScoreChange(spielTeilnehmerId2, e.target.value)}
+                >
+                  <option value="" disabled>
+                    Punkte
+                  </option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </td>
+            </tr>
+          );
+        }
+        return null;
+      })
+    ))}
+  </tbody>
+</table>
     </div>
   );
 }

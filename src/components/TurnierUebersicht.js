@@ -83,6 +83,30 @@ function TurnierUebersicht() {
       console.error('Error starting turnier:', error.message);
     }
   };
+
+  const handleVorrundeClick = async (turnierId) => {
+    try {
+      const response = await fetch(`http://localhost:5222/api/runde/startVorrunde?turnierId=${turnierId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        // Handle success, e.g., redirect to Uebersicht page
+       navigate("/TurnierUebersicht");
+        console.log('Vorrunde started successfully');
+      } else {
+        // Handle error, e.g., show an error message
+        console.error('Error starting Vorrunde:', response.statusText);
+      }
+      navigate("/TurnierUebersicht");
+    } catch (error) {
+      // Handle exceptions appropriately
+      console.error('Error starting Vorrunde:', error.message);
+    }
+  };
   
 
   
@@ -121,7 +145,7 @@ function TurnierUebersicht() {
                   < button className="cellWithSpace" onClick={()=>handleStartClick(turnier.id)}>Start</button>
                 </td>
                 <td>
-                  < button className="cellWithSpace" onClick={''}>Vorrunde</button>
+                  < button className="cellWithSpace" onClick={()=>handleVorrundeClick(turnier.id)}>Vorrunde</button>
                 </td>
                 <td>
                   < button className="cellWithSpace" onClick={''}>Finale</button>
