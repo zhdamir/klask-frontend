@@ -1,5 +1,150 @@
+.grid-container{
+  padding: 40px;
+    display: grid;
+    grid-template-columns:  repeat(4,15vw) ;
+    grid-template-rows: repeat(7,6vh);
+    gap: 20px;
+}
+
+
 button{
     margin-top: 20px;
     padding: 0.5rem;
     background-color: rgb(180, 179, 228);
+}
+
+  .label-vorname {
+    margin-right: 10px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
+
+  .label-nachname {
+    margin-right: 10px;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 3;
+    grid-row-end: 3;
+  }
+
+  .label-email {
+   
+    margin-right: 10px;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 4;
+    grid-row-end: 4;
+  }
+
+  .label-bereich {
+  
+    margin-right: 10px;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 5;
+    grid-row-end: 5;
+  }
+
+  .label-rolle {
+   
+    margin-right: 10px;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 6;
+    grid-row-end: 6;
+  }
+
+  .input-vorname {
+    
+    margin-right: 10px;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 2;
+  }
+
+  .input-nachname {
+   
+    margin-right: 10px;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 3;
+  }
+
+  .input-email {
+   
+    margin-right: 10px;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 4;
+    grid-row-end: 4;
+  }
+
+  .input-bereich {
+  
+    margin-right: 10px;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 5;
+    grid-row-end: 5;
+    font-size: 20px;
+  }
+
+  .input-rolle {
+   
+    margin-right: 10px;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 6;
+    grid-row-end: 6;
+    font-size: 20px;
+  }
+
+
+
+  .btn-speichern{
+    margin-right: 10px;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 7;
+    grid-row-end: 7;
+    font-size: 20px;
+    width: 200px;
+    height: 60px;
+    background-color: white;
+  
+  }
+
+  .btn-abbrechen{
+    margin-right: 10px;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 7;
+    grid-row-end: 7;
+    font-size: 20px;
+    width: 200px;
+    height: 60px;
+    background-color: white;
+  
+  }
+  
+  .ueberschrift-bearbeiten{
+    margin-right: 10px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 1;
+  }
+
+  h2{
+    padding-block: .5rem;
+    color: white;
+}
+
+.label{
+  padding-block: .5rem;
+  color: white;
 }

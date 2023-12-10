@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TeilnehmerBearbeiten from './TeilnehmerBearbeiten';
+import '../SpielerUebersicht.css';
 
 function SpielerUebersicht() {
   const [teilnehmerList, setTeilnehmerList] = useState([]);
@@ -67,8 +68,9 @@ function SpielerUebersicht() {
   };
 
   return (
-    <div>
-      <h1>Teilnehmerliste</h1>
+    <div className='teilnehmer-flex-container'>
+       <div className="teilnehmerListe">
+      <h2>Teilnehmerliste</h2>
       <table>
         <thead>
           <tr>
@@ -112,6 +114,7 @@ function SpielerUebersicht() {
           rolleOptions={rolleOptions}
         />
       )}
+      </div>
     </div>
   );
 }

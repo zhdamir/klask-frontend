@@ -1,50 +1,62 @@
-.logo {
-    margin-right: 400px;
-}
-
 .main-list {
     display: flex;
-    /*background-color: rgb(6, 8, 40);*/
     color: black;
-    /*background-color: antiquewhite;*/
-    background-color: rgb(196, 202, 206);
+    justify-content: space-evenly;
+    align-items: center;
+    padding-block: 1rem;
+    gap: 2rem;
+    & li{
+        padding: .6rem calc(.6rem * 1.618);
+        color: white;
+        cursor: pointer;
+        user-select: none;
+    }
+    & li:hover{
+        background-color: #15263D;
+    }
+}
+.menu-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
 }
 
-.header {
+.header{
     display: flex;
-    /*background-color: rgb(6, 8, 40);*/
-    border-bottom: solid 4px rgb(236, 229, 229);
-    /*background-color: antiquewhite;*/
-    background-color: rgb(196, 202, 206);
+    justify-content: space-between;
+    align-items: center;
+    padding-inline: 1rem;
+    background-color: hsl(215, 30%, 30%);
 }
 
 .list-items {
-    display: flex;
+    padding-inline: 1rem;
 
 }
 
 
 .ueberschrift {
+    display: grid;
+    place-content: center;
     padding: 2px;
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-top: 40px;
-    color: black;
+    /*color: black;*/
 }
 
-.nav {
-    display: none;
-    position: absolute;
-    right: -140px;
-    text-decoration: none;
-}
 
 .verwalten {
     position: relative;
+    &:focus-within{
+        background-color: #15263D;
+    }
 }
 
-.verwalten:focus-within .nav {
+.verwalten:focus-within .dropdown {
     display: block;
+}
+.verwalten:focus-within .fa-chevron-down{
+    transition: all .5s;
+    transform: rotateZ(180deg);
 }
 
 button {
@@ -57,31 +69,28 @@ button {
     outline: inherit;
 }
 
-.menu-item {
-    margin-left: 100px;
-    margin-right: 100px;
-}
-
 .dropdown {
-    margin-top: 30px;
-    width: 250px;
-    height: 100px;
-    background-color: rgb(6, 8, 40);
-    text-align: left;
-    background-color: antiquewhite;
-}
-
-li {
-    text-decoration: none;
+    width: 150%;
+    display: none;
+    top: 100%;
+    left: 0;
+    position: absolute;
+    padding: 1rem calc(1rem * 1.618);
+    background-color: #15263D;
+    color: white;
+    transform: translateX(calc(-12.5% - .6rem));
+    & li:hover{
+        background-color: hsl(215, 30%, 30%);
+    }
 }
 
 .logo {
     display: flex;
 }
 
-img {
+.header-logo {
     width: 150px;
-    height: 150px;
+    aspect-ratio: 1;
 }
 
 ul {
@@ -89,10 +98,13 @@ ul {
 }
 
 .links{
-    list-style: none;
     text-decoration: none;
     color: inherit;
-    margin-bottom: 10px;
 }
 
-
+.heading{
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+}

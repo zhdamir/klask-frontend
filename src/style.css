@@ -1,4 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@font-face{
+  font-family: "clarika";
+  src: url(./resources/font/ClarikaGeometric-Regular.woff);
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face{
+  font-family: "clarika";
+  src: url(./resources/font/ClarikaGeometric-Italic.woff);
+  font-style: italic;
+  font-weight: normal;
+}
+@font-face{
+  font-family: "clarika";
+  src: url(./resources/font/ClarikaGeometric-Bold.woff);
+  font-style: normal;
+  font-weight: bold;
+}
+@font-face {
+  font-family: "clarika";
+  src: url(./resources/font/ClarikaGeometric-BoldItalic.woff);
+  font-style: italic;
+  font-weight: bold;
+}
 
 * {
     margin: 0;
@@ -13,8 +36,11 @@ html {
 }
 
 body {
-    min-height: 100vh;
+  
     background-color: #0a169a;
+    color: #15263D;
+    background-color: white;
+    
 }
 
 .App {
@@ -90,11 +116,24 @@ button {
 }
 
 .content{
-  margin: 10px;
+  
+  margin:1rem 3rem;
+  min-height: calc(100vh - 20vh - 62px);
+  /*von james*/
+  border: 2px solid #15263D;
+    border-radius: 20px;
+    background-color: #B1C7DC;
+    padding: .6rem calc(.6rem * 1.618);
+    margin: 1rem 3rem;
+    min-height: calc(100vh - 20vh);
+    &> div{
+        margin-block: 1.618rem;
+    }
 }
 
 .footer{
   margin-top: auto;
+  
 }
 
 /* App.css */
@@ -102,6 +141,11 @@ button {
   display: flex;
   flex-direction: column;
   min-height: 87vh;
+}
+
+.submitScores{
+  padding: 15px;
+  background-color: cadetblue;
 }
 
 

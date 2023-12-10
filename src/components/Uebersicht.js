@@ -11,6 +11,14 @@ function Uebersicht() {
   const [scores, setScores] = useState({});
   const navigate = useNavigate();
   const [vorrundenDetails, setVorrundenDetails] = useState([]);
+  const [vorrundeStarted, setVorrundeStarted] = useState(false);
+  const [startScreenVisible, setStartScreenVisible] = useState(true); //
+
+  const handleStartScreenClick = () => {
+    // Hide the start screen and enable body overflow
+    setStartScreenVisible(false);
+    document.querySelector('body').style.overflowY = 'auto';
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +56,8 @@ function Uebersicht() {
         const vorrundenData = await vorrundenResponse.json();
         console.log('Gruppenrunden Details:', vorrundenData);
         setVorrundenDetails(vorrundenData);
+        // Check if Vorrunde has started
+    setVorrundeStarted(vorrundenData.length > 0);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -123,10 +133,38 @@ function Uebersicht() {
 
   return (
     <div>
+       {startScreenVisible && (
+       <div className="start-screen" onClick={handleStartScreenClick}>
+        <div className="left">
+            <div className="klask-logo">
+                <img src="/klask_logo.svg" alt="klask" height="400"/>
+            </div>
+        </div>
+        <div className="right">
+            <div className="klask-logo">
+                <img src="/klask_logo.svg" alt="klask" height="400"/>
+            </div>
+        </div>
+    </div>)}
       {activeTurnierFound ? (
         <>
-          <h1>Turnierliste</h1>
-          <table>
+       
+         
+          {turnierList
+  .sort((a, b) => a.id - b.id)
+  .map((turnier) => (
+    <>
+    <h2 className='heading'>Aktuelles Turnier</h2>
+    <div className='activeTurnierDaten'>
+      <div><h2>Turniertitel</h2> <div>{turnier.turnierTitel}</div></div>
+      <div><h2>Startdatum</h2><div>{formatDate(turnier.startDatum)}</div></div>
+      <div><h2>Enddatum</h2><div>{formatDate(turnier.endDatum)}</div></div>
+      <div><h2>Anzahl Gruppen</h2><div>{turnier.anzahlGruppen}</div></div>
+      <div><h2>Status</h2><div>{turnier.isActive ? 'Aktiv' : 'Inaktiv'}</div></div>
+    </div>
+    </>
+))}
+          {/*<table>
             <thead>
               <tr>
                 <th className="cellWithSpace">Turniertitel</th>
@@ -149,175 +187,192 @@ function Uebersicht() {
                   </tr>
                 ))}
             </tbody>
-          </table>
+                </table>*/}
 
           {/* Display groups and their associated Teilnehmer */}
+          <div className='gruppe-flex-container'>
           {gruppenDetails.map((group) => (
-            <div key={group.gruppeId}>
-              <h2>{group.gruppenname}</h2>
+            <>
+                <div className="gruppe-inhalt" key={group.gruppeId}>
+                  <h2>{group.gruppenname}</h2>
 
-              {/* Check if teilnehmer is defined before mapping */}
-              {group.teilnehmer && group.teilnehmer.length > 0 ? (
-                <table>
-                  <thead>
-                    <tr>
-                      {/* Add other columns as needed */}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {group.teilnehmer.map((teilnehmer) => (
-                      <tr key={teilnehmer.teilnehmerId}>
-                        <td className="cellWithSpace">{teilnehmer.vorname}</td>
-                        {/* Add other cells for additional Teilnehmer information */}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p>No Teilnehmer available for this group.</p>
-              )}
-            </div>
+                  {/* Check if teilnehmer is defined before mapping */}
+                  {group.teilnehmer && group.teilnehmer.length > 0 ? (
+                    <table>
+                      <thead>
+                        <tr>
+                          {/* Add other columns as needed */}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {group.teilnehmer.map((teilnehmer) => (
+                          <tr key={teilnehmer.teilnehmerId}>
+                            <td className="cellWithSpace">{teilnehmer.vorname}</td>
+                            {/* Add other cells for additional Teilnehmer information */}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p>No Teilnehmer available for this group.</p>
+                  )}
+                 </div>
+            </>
           ))}
-
+        </div>
           <br />
 
           {/* Display games for each group */}
-          {Object.entries(groupedTeilnehmerByGroup).map(([groupName, groupTeilnehmer]) => (
-            <div key={groupName}>
-              <h2>Begegnungen {groupName} </h2>
-              <table>
-                <thead>
-                  <tr>
-                    <th className="cellWithSpace">Teilnehmer 1</th>
-                    <th className="cellWithSpace">Teilnehmer 2</th>
-                    <th className="cellWithSpace">Punkte 1</th>
-                    <th className="cellWithSpace">Punkte 2</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {groupTeilnehmer.map((teilnehmer1, index) => (
-                    // Iterate over Teilnehmer pairs
-                    groupTeilnehmer.map((teilnehmer2, innerIndex) => {
-                      // Check for duplicate pairs
-                      if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
-                        const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
-                        const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
+          <div className='gruppenSpiele-flex-container'>
+            {Object.entries(groupedTeilnehmerByGroup).map(([groupName, groupTeilnehmer]) => (
+              <div className="gruppeSpieleInhalt" key={groupName}>
+                <h2>Begegnungen {groupName} </h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th className="cellWithSpace">Teilnehmer 1</th>
+                      <th className="cellWithSpace">Teilnehmer 2</th>
+                      <th className="cellWithSpace">Punkte 1</th>
+                      <th className="cellWithSpace">Punkte 2</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {groupTeilnehmer.map((teilnehmer1, index) => (
+                      // Iterate over Teilnehmer pairs
+                      groupTeilnehmer.map((teilnehmer2, innerIndex) => {
+                        // Check for duplicate pairs
+                        if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
+                          const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
+                          const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
 
-                        const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte; // Use default score if not in scores
-                        const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte; // Use default score if not in scores
+                          const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte; // Use default score if not in scores
+                          const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte; // Use default score if not in scores
 
-                        return (
-                          <tr key={index + '-' + innerIndex}>
-                            <td className="cellWithSpace">{teilnehmer1.vorname}</td>
-                            <td className="cellWithSpace">{teilnehmer2.vorname}</td>
-                            <td className="cellWithSpace">
-                              <select
-                               value={score1 === null ? "" : score1}
-                                onChange={(e) => handleScoreChange(spielTeilnehmerId1, e.target.value)}
-                              >
-                                <option value="" disabled>
-                                 Punkte
-                                </option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                              </select>
-                            </td>
-                            <td className="cellWithSpace">
-                              <select
-                                value={score2 === null ? "" : score2}
-                                onChange={(e) => handleScoreChange(spielTeilnehmerId2, e.target.value)}
-                              >
-                                <option value="" disabled>
-                                  Punkte
-                                </option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                              </select>
-                            </td>
-                          </tr>
-                        );
-                      }
-                      return null;
-                    })
-                  ))}
-                </tbody>
-              </table>
+                          const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
 
-            </div>
+                          return (
+                            <tr /*key={index + '-' + innerIndex}*/key={rowKey}>
+                              <td className="cellWithSpace">{teilnehmer1.vorname}</td>
+                              <td className="cellWithSpace">{teilnehmer2.vorname}</td>
+                              <td className="cellWithSpace">
+                                <select
+                                value={score1 === null ? "" : score1}
+                                  onChange={(e) => handleScoreChange(spielTeilnehmerId1, e.target.value)}
+                                >
+                                  <option value="" disabled>
+                                    Select Score
+                                  </option>
+                                  <option value="0">0</option>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                </select>
+                              </td>
+                              <td className="cellWithSpace">
+                                <select
+                                  value={score2 === null ? "" : score2}
+                                  onChange={(e) => handleScoreChange(spielTeilnehmerId2, e.target.value)}
+                                >
+                                  <option value="" disabled>
+                                    Select Score
+                                  </option>
+                                  <option value="0">0</option>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                </select>
+                              </td>
+                            </tr>
+                          );
+                        }
+                        return null;
+                      })
+                    ))}
+                  </tbody>
+                </table>
+              </div>
           ))}
+</div>
+          
 
-          {/* Button to submit scores */}
-          <button onClick={handleSubmitScores}>Submit Scores</button>
+
+{/* Display games for each group */}
+<div className='vorrunde-flex-container'>
+    <div className="vorrundeInhalt">
+  {vorrundeStarted && (
+    <>
+      <h2>Vorrunden</h2>
+      <table>
+        <thead>
+          <tr>
+            {/* Add headers for vorrundenDetails */}
+            <th className="cellWithSpace">Teilnehmer 1</th>
+            <th className="cellWithSpace">Teilnehmer 2</th>
+            <th className="cellWithSpace">Punkte 1</th>
+            <th className="cellWithSpace">Punkte 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          {vorrundenDetails.map((teilnehmer1, index) => (
+            // Iterate over Teilnehmer pairs
+            vorrundenDetails.map((teilnehmer2, innerIndex) => {
+              // Check for duplicate pairs
+              if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
+                const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
+                const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
+
+                const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte;
+                const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte;
+
+                const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
+
+                return (
+                  <tr key={rowKey}>
+                    <td className="cellWithSpace">{teilnehmer1.vorname}</td>
+                    <td className="cellWithSpace">{teilnehmer2.vorname}</td>
+                    <td className="cellWithSpace">
+                      <select
+                        value={score1 === null ? "" : score1}
+                        onChange={(e) => handleScoreChange(spielTeilnehmerId1, e.target.value)}
+                      >
+                        <option value="" disabled>
+                          Select Score
+                        </option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                    </td>
+                    <td className="cellWithSpace">
+                      <select
+                        value={score2 === null ? "" : score2}
+                        onChange={(e) => handleScoreChange(spielTeilnehmerId2, e.target.value)}
+                      >
+                        <option value="" disabled>
+                          Select Score
+                        </option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                    </td>
+                  </tr>
+                );
+              }
+              return null;
+            })
+          ))}
+        </tbody>
+      </table>
+    </>
+  )}
+  </div>
+</div>
+
+{/* Button to submit scores */}
+<button className="submitScore" onClick={handleSubmitScores}>Submit Scores</button>
         </>
       ) : (
         <p>No active Turnier found.</p>
       )}
-
-
-              {/* Display vorrundenDetails */}
-<h2>Vorrunden</h2>
-<table>
-  <thead>
-    <tr>
-      {/* Add headers for vorrundenDetails */}
-      <th className="cellWithSpace">Teilnehmer 1</th>
-      <th className="cellWithSpace">Teilnehmer 2</th>
-      <th className="cellWithSpace">Punkte 1</th>
-      <th className="cellWithSpace">Punkte 2</th>
-    </tr>
-  </thead>
-  <tbody>
-    {vorrundenDetails.map((teilnehmer1, index) => (
-      // Iterate over Teilnehmer pairs
-      vorrundenDetails.map((teilnehmer2, innerIndex) => {
-        // Check for duplicate pairs
-        if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
-          const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
-          const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
-
-          const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte;
-          const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte;
-
-          return (
-            <tr key={index + '-' + innerIndex}>
-              <td className="cellWithSpace">{teilnehmer1.vorname}</td>
-              <td className="cellWithSpace">{teilnehmer2.vorname}</td>
-              <td className="cellWithSpace">
-                <select
-                  value={score1 === null ? "" : score1}
-                  onChange={(e) => handleScoreChange(spielTeilnehmerId1, e.target.value)}
-                >
-                  <option value="" disabled>
-                    Punkte
-                  </option>
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                </select>
-              </td>
-              <td className="cellWithSpace">
-                <select
-                  value={score2 === null ? "" : score2}
-                  onChange={(e) => handleScoreChange(spielTeilnehmerId2, e.target.value)}
-                >
-                  <option value="" disabled>
-                    Punkte
-                  </option>
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                </select>
-              </td>
-            </tr>
-          );
-        }
-        return null;
-      })
-    ))}
-  </tbody>
-</table>
     </div>
   );
 }

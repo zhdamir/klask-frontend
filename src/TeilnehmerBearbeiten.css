@@ -122,6 +122,7 @@
     font-size: 20px;
     width: 200px;
     height: 60px;
+    background-color: white;
   
   }
 
@@ -134,6 +135,7 @@
     font-size: 20px;
     width: 200px;
     height: 60px;
+    background-color: white;
   
   }
   
@@ -144,6 +146,17 @@
     grid-row-start: 1;
     grid-row-end: 1;
   }
+
+  h2{
+    padding-block: .5rem;
+    color: white;
+}
+
+.label{
+  padding-block: .5rem;
+  color: white;
+}
+
   
   
  

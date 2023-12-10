@@ -55,19 +55,19 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
       <div className="bearbeiten-content">
         <h2 className="ueberschrift-bearbeiten">Teilnehmer bearbeiten</h2>
        
-          <label className="label1">Vorname:</label>
+          <label className="label label1">Vorname:</label>
           <input className="input-box1" type="text" value={editedTeilnehmer.vorname} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, vorname: e.target.value })} />
        
        
-          <label className="label2">Nachname:</label>
+          <label className="label label2">Nachname:</label>
           <input className="input-box2" type="text" value={editedTeilnehmer.nachname} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, nachname: e.target.value })} />
         
        
-        <label className="label3">Email:</label>
+        <label className="label label3">Email:</label>
         <input className="input-box3" type="text" value={editedTeilnehmer.email} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, email: e.target.value })} />
        
        
-        <label className="label4">Bereich:</label>
+        <label className="label label4">Bereich:</label>
         <select className="input-box4" value={editedTeilnehmer.bereichId} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, bereichId: e.target.value })}>
           <option value="" disabled>Bereich wählen</option>
           {bereichOptions.map((bereich) => (
@@ -78,7 +78,7 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
         </select>
         
        
-        <label className="label5">Rolle:</label>
+        <label className="label label5">Rolle:</label>
         <select className="input-box5" value={editedTeilnehmer.rolleId} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, rolleId: e.target.value })}>
           <option value="" disabled>Rolle wählen</option>
           {rolleOptions.map((rolle) => (

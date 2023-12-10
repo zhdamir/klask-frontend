@@ -49,11 +49,8 @@ const TeilnehmerAnlegen = () => {
       });
 
       if (response.ok) {
-        // Teilnehmer created successfully
-        // You may redirect or show a success message here
         navigate("/SpielerUebersicht");
       } else {
-        // Handle error, show error message, etc.
         console.error('Error creating Teilnehmer:', response.statusText);
       }
     } catch (error) {
@@ -62,23 +59,23 @@ const TeilnehmerAnlegen = () => {
   };
 
   return (
-    <div>
-      <h1>Create Teilnehmer</h1>
-      <div>
-        <label>Vorname:</label>
-        <input type="text" value={vorname} onChange={(e) => setVorname(e.target.value)} />
-      </div>
-      <div>
-        <label>Nachname:</label>
-        <input type="text" value={nachname} onChange={(e) => setNachname(e.target.value)} />
-      </div>
-      <div>
-        <label>Email:</label>
-        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
-      </div>
-      <div>
-        <label>Bereich:</label>
-        <select value={selectedBereich} onChange={(e) => setSelectedBereich(e.target.value)}>
+    <div className='grid-container'>
+      <h2 className="ueberschrift-anlegen">Create Teilnehmer</h2>
+     
+        <label className="label label-vorname">Vorname:</label>
+        <input className="input-vorname" type="text" value={vorname} onChange={(e) => setVorname(e.target.value)} />
+     
+     
+        <label className="label label-nachname">Nachname:</label>
+        <input className="input-nachname" type="text" value={nachname} onChange={(e) => setNachname(e.target.value)} />
+      
+     
+        <label className="label label-email">Email:</label>
+        <input className="input-email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+      
+     
+        <label className="label label-bereich">Bereich:</label>
+        <select className="input-bereich" value={selectedBereich} onChange={(e) => setSelectedBereich(e.target.value)}>
           <option value="" disabled>Bereich wählen</option>
           {bereiche.map((bereich) => (
             <option key={bereich.bereichId} value={bereich.bereichId}>
@@ -86,10 +83,10 @@ const TeilnehmerAnlegen = () => {
             </option>
           ))}
         </select>
-      </div>
-      <div>
-        <label>Rolle:</label>
-        <select value={selectedRolle} onChange={(e) => setSelectedRolle(e.target.value)}>
+      
+    
+        <label className="label label-rolle">Rolle:</label>
+        <select className="input-rolle" value={selectedRolle} onChange={(e) => setSelectedRolle(e.target.value)}>
           <option value="" disabled>Rolle wählen</option>
           {rollen.map((rolle) => (
             <option key={rolle.rolleId} value={rolle.rolleId}>
@@ -97,8 +94,8 @@ const TeilnehmerAnlegen = () => {
             </option>
           ))}
         </select>
-      </div>
-      <button onClick={handleCreateTeilnehmer}>Create Teilnehmer</button>
+     
+      <button className="btn-anlegen" onClick={handleCreateTeilnehmer}>Create Teilnehmer</button>
     </div>
   );
 };
