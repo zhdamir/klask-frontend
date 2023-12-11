@@ -14,6 +14,10 @@ function Uebersicht() {
   const [vorrundeStarted, setVorrundeStarted] = useState(false);
   const [startScreenVisible, setStartScreenVisible] = useState(true); //
 
+
+  const [gruppenResults, setGruppenResults] = useState([]);
+  const [vorrundeResults, setVorrundeResults] = useState([]);
+
   const handleStartScreenClick = () => {
     // Hide the start screen and enable body overflow
     setStartScreenVisible(false);
@@ -51,11 +55,24 @@ function Uebersicht() {
         console.log('Gruppenrunden Details:', detailsData);
         setGruppenrundenDetails(detailsData);
 
+        // Fetch turnier details (groups with participants) for the active Turnier
+        const gruppenResultsResponse = await fetch('http://localhost:5222/api/turnier/gruppenrundenResults');
+        const resultsData = await gruppenResultsResponse.json();
+        console.log('Gruppen Results:', resultsData);
+        setGruppenResults(resultsData);
+
         // Fetch vorrunden details for the active Turnier
         const vorrundenResponse = await fetch('http://localhost:5222/api/runde/vorrundenDetails');
         const vorrundenData = await vorrundenResponse.json();
         console.log('Gruppenrunden Details:', vorrundenData);
         setVorrundenDetails(vorrundenData);
+
+        // Fetch turnier details (groups with participants) for the active Turnier
+        const vorrundeResultsResponse = await fetch('http://localhost:5222/api/runde/vorrundenResults');
+        const vorrundeResultsData = await vorrundeResultsResponse.json();
+        console.log('Vorrunde Results:', vorrundeResultsData);
+        setVorrundeResults(vorrundeResultsData);
+
         // Check if Vorrunde has started
     setVorrundeStarted(vorrundenData.length > 0);
       } catch (error) {
@@ -163,32 +180,7 @@ function Uebersicht() {
       <div><h2>Status</h2><div>{turnier.isActive ? 'Aktiv' : 'Inaktiv'}</div></div>
     </div>
     </>
-))}
-          {/*<table>
-            <thead>
-              <tr>
-                <th className="cellWithSpace">Turniertitel</th>
-                <th className="cellWithSpace">Startdatum</th>
-                <th className="cellWithSpace">Enddatum</th>
-                <th className="cellWithSpace">Anzahl Gruppen</th>
-                <th className="cellWithSpace">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {turnierList
-                .sort((a, b) => a.id - b.id)
-                .map((turnier) => (
-                  <tr key={turnier.id}>
-                    <td className="cellWithSpace">{turnier.turnierTitel}</td>
-                    <td className="cellWithSpace">{formatDate(turnier.startDatum)}</td>
-                    <td className="cellWithSpace">{formatDate(turnier.endDatum)}</td>
-                    <td className="cellWithSpace">{turnier.anzahlGruppen}</td>
-                    <td className="cellWithSpace">{turnier.isActive ? 'Aktiv' : 'Inaktiv'}</td>
-                  </tr>
-                ))}
-            </tbody>
-                </table>*/}
-
+))}   
           {/* Display groups and their associated Teilnehmer */}
           <div className='gruppe-flex-container'>
           {gruppenDetails.map((group) => (
@@ -237,7 +229,9 @@ function Uebersicht() {
                     </tr>
                   </thead>
                   <tbody>
-                    {groupTeilnehmer.map((teilnehmer1, index) => (
+                    {groupTeilnehmer
+                     .sort((a, b) => a.vorname.localeCompare(b.vorname))
+                     .map((teilnehmer1, index) => (
                       // Iterate over Teilnehmer pairs
                       groupTeilnehmer.map((teilnehmer2, innerIndex) => {
                         // Check for duplicate pairs
@@ -292,6 +286,57 @@ function Uebersicht() {
           ))}
 </div>
           
+{/* Display groups and their associated Ergebnisse */}
+<div className='results-flex-container'>
+  {gruppenDetails.map((group) => (
+    <div className="resultsInhalt" key={group.gruppeId}>
+      <h2>{" Ergebnisse "+ group.gruppenname}</h2>
+
+      {/* Check if gruppenResults for the current group is defined before mapping */}
+      {gruppenResults && gruppenResults.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              <th className="cellWithSpace">Vorname</th>
+              <th className="cellWithSpace">Anzahl Spiele</th>
+              <th className="cellWithSpace">Anzahl Siege</th>
+              <th className="cellWithSpace">Satz Diff</th>
+              {/* Add other columns as needed */}
+            </tr>
+          </thead>
+          <tbody>
+            {gruppenResults
+              .filter((result) => result.gruppeId === group.gruppeId)
+              .sort((a, b) => b.satzDifferenz - a.satzDifferenz) // Sort by Sätze Diff in descending order
+              .reduce((acc, result) => {
+                // Check if teilnehmerId is already in the Set or object
+                if (!acc[result.teilnehmerId]) {
+                  // Add the teilnehmerId to the Set or object to mark it as processed
+                  acc[result.teilnehmerId] = true;
+
+                  // Render the row for this Teilnehmer
+                  return [
+                    ...acc,
+                    <tr key={result.teilnehmerId}>
+                      <td className="cellWithSpace">{result.vorname}</td>
+                      <td className="cellWithSpace">{result.anzahlSpiele}</td>
+                      <td className="cellWithSpace">{result.anzahlSiege}</td>
+                      <td className="cellWithSpace">{result.satzDifferenz}</td>
+                      {/* Add other cells for additional Ergebnisse information */}
+                    </tr>,
+                  ];
+                }
+
+                return acc;
+              }, [])}
+          </tbody>
+        </table>
+      )}
+    </div>
+  ))}
+</div>
+
+
 
 
 {/* Display games for each group */}
@@ -366,6 +411,58 @@ function Uebersicht() {
   )}
   </div>
 </div>
+
+{/* Display games for each group */}
+<div className='vorrunde-flex-container'>
+  <div className="vorrundeInhalt">
+    {vorrundeStarted && (
+      <>
+        <h2>Vorrunden</h2>
+        <table>
+          <thead>
+            <tr>
+              {/* Add headers for vorrundenDetails */}
+              <th className="cellWithSpace">Vorname</th>
+              <th className="cellWithSpace">Anzahl Spiele</th>
+              <th className="cellWithSpace">Anzahl Siege</th>
+              <th className="cellWithSpace">Sätze Differenz</th>
+            </tr>
+          </thead>
+          <tbody>
+            {vorrundeResults
+              .sort((a, b) => b.satzDifferenz - a.satzDifferenz) // Sort by Sätze Diff in descending order
+              .reduce((acc, result) => {
+                // Check if teilnehmerId is already in the acc array
+                if (!acc.some((item) => item.teilnehmerId === result.teilnehmerId)) {
+                  // Add the result to the acc array
+                  return [
+                    ...acc,
+                    {
+                      teilnehmerId: result.teilnehmerId,
+                      vorname: result.vorname,
+                      anzahlSpiele: result.anzahlSpiele,
+                      anzahlSiege: result.anzahlSiege,
+                      satzDifferenz: result.satzDifferenz,
+                    },
+                  ];
+                }
+                return acc;
+              }, [])
+              .map((result) => (
+                <tr key={result.teilnehmerId}>
+                  <td className="cellWithSpace">{result.vorname}</td>
+                  <td className="cellWithSpace">{result.anzahlSpiele}</td>
+                  <td className="cellWithSpace">{result.anzahlSiege}</td>
+                  <td className="cellWithSpace">{result.satzDifferenz}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </>
+    )}
+  </div>
+</div>
+
 
 {/* Button to submit scores */}
 <button className="submitScore" onClick={handleSubmitScores}>Submit Scores</button>
