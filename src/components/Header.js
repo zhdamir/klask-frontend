@@ -29,7 +29,7 @@ const Header = () => {
                             <li><Link className="links" to="/TeilnehmerAnlegen">Neuen Spieler anlegen</Link></li>
                         </ul>
                   </li>
-                  <li className="menu-item"><i class="fa-solid fa-chart-simple"></i>Turnierergebnisse</li>
+                  <li className="menu-item"><i class="fa-solid fa-chart-simple"></i><Link className="links" to="/TurnierErgebnisse">Turnierergebnisse</Link></li>
               </ul>
               </div>
         </div>

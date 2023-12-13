@@ -12,7 +12,9 @@ import TeilnehmerAnlegen from './components/TeilnehmerAnlegen';
 import TurnierAnlegen from './components/TurnierAnlegen';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import TurnierErgebnisse from './components/TurnierErgebnisse';
 import './Header.css';
+import UebersichtHistorie from './components/UebersichtHistorie';
 
 
 function App(){
@@ -32,10 +34,12 @@ function App(){
       <Routes>
         <Route path="/SpielerUebersicht" element={<SpielerUebersicht/>} /> {/* Define a route for SpielerUebersicht */}
         <Route path="/TurnierUebersicht" element={<TurnierUebersicht/>} /> {/* Define a route for TurnierUebersicht */}
+        <Route path="/TurnierErgebnisse" element={<TurnierErgebnisse/>} /> {/* Define a route for TurnierUebersicht */}
         <Route path="/Uebersicht" element={<Uebersicht/>} /> {/* Define a route for Uebersicht */}
         {/* Other routes for additional pages, if needed */}
         <Route path="/TeilnehmerAnlegen" element={<TeilnehmerAnlegen/>} /> {/* Define a route for CreateTeilnehmer */}
         <Route path="/TurnierAnlegen" element={<TurnierAnlegen/>} /> {/* Define a route for CreateTeilnehmer */}
+        <Route path="/UebersichtHistorie/:turnierId" element={<UebersichtHistorie/>} /> {/* Define a route for TurnierUebersicht */}
       </Routes>
       </div>
       </div>
