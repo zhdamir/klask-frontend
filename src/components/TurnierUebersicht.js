@@ -136,20 +136,21 @@ function TurnierUebersicht() {
 
   
   return (
-    <div>
-      <h1>Turnierliste</h1>
+    <div className='turnier-flex-container'>
+    <div className='turnierListe'>
+      <h2>Turnierliste</h2>
       <table>
         <thead>
           <tr>
-            <th className="cellWithSpace">Turniertitel</th>
-            <th className="cellWithSpace">Startdatum</th>
-            <th className="cellWithSpace">Enddatum</th>
-            <th className="cellWithSpace">Anzahl Gruppen</th>
-            <th className="cellWithSpace">Status</th>
-            <th className="cellWithSpace">Teilnehmer Hinzufügen</th>
-            <th className="cellWithSpace">Start</th>
-            <th className="cellWithSpace">Vorrunde</th>
-            <th className="cellWithSpace">Finale</th>
+            <th >Turniertitel</th>
+            <th>Startdatum</th>
+            <th >Enddatum</th>
+            <th >Anzahl Gruppen</th>
+            <th >Status</th>
+            <th >Teilnehmer Hinzufügen</th>
+            <th >Start</th>
+            <th >Vorrunde</th>
+            <th >Finale</th>
           </tr>
         </thead>
         <tbody>
@@ -157,23 +158,23 @@ function TurnierUebersicht() {
             .sort((a, b) => a.id - b.id)
             .map((turnier) => (
               <tr key={turnier.id}>
-                <td className="cellWithSpace">{turnier.turnierTitel}</td>
-                <td className="cellWithSpace">{formatDate(turnier.startDatum)}</td>
-                <td className="cellWithSpace">{formatDate(turnier.endDatum)}</td>
-                <td className="cellWithSpace">{turnier.anzahlGruppen}</td>
+                <td >{turnier.turnierTitel}</td>
+                <td >{formatDate(turnier.startDatum)}</td>
+                <td >{formatDate(turnier.endDatum)}</td>
+                <td >{turnier.anzahlGruppen}</td>
 
-                <td className="cellWithSpace">{turnier.isActive? 'Aktiv':'Inaktiv'}</td>
-                <td>
-                  < button className="cellWithSpace" onClick={() => handleTeilnehmerListeClick(turnier)}>Teilnehmer hinzufügen</button>
+                <td >{turnier.isActive? 'Aktiv':'Inaktiv'}</td>
+                <td >
+                  < button className="submitScore" onClick={() => handleTeilnehmerListeClick(turnier)}>Teilnehmer hinzufügen</button>
                 </td>
                 <td>
-                  < button className="cellWithSpace" onClick={()=>handleStartClick(turnier.id)}>Start</button>
+                  < button className="submitScore" onClick={()=>handleStartClick(turnier.id)}>Start</button>
                 </td>
                 <td>
-                  < button className="cellWithSpace" onClick={()=>handleVorrundeClick(turnier.id)}>Vorrunde</button>
+                  < button className="submitScore" onClick={()=>handleVorrundeClick(turnier.id)}>Vorrunde</button>
                 </td>
                 <td>
-                  < button className="cellWithSpace" onClick={()=>handleFinaleClick(turnier.id)}>Finale</button>
+                  < button className="submitScore" onClick={()=>handleFinaleClick(turnier.id)}>Finale</button>
                 </td>
               </tr>
             ))}
@@ -188,6 +189,7 @@ function TurnierUebersicht() {
           turnier={selectedTurnier}
         />
       )}
+    </div>
     </div>
   );
 }

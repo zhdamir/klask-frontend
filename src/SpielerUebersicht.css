@@ -22,3 +22,25 @@
     flex-wrap: wrap;
     margin: 20px;
 }
+
+
+.submitScore{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 0 .3em black;
+    color: black;
+    padding-inline: 1.600rem;
+    padding-block:0.8rem ;
+    &:hover{
+        background-color: #ccc;
+    }
+    &:active{
+        filter: invert(100%);
+    }
+  }
+  

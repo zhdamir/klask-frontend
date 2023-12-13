@@ -1,3 +1,58 @@
-.cellWithSpace {
-    padding-right: 40px;
+
+  .turnierListe{
+    background-color: #15263D;
+    color: black;
+    & h2{
+        padding-block: .5rem;
+        color: white;
+    }
+    & td, & th{
+        padding: .6rem calc(.6rem * 1.618);
+        background-color: white;
+    }
+    & input{
+        width: 50px;
+        text-align: center;
+    }
+}
+
+.turnier-flex-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+
+
+.submitScore{
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 .3em black;
+  color: black;
+  padding-inline: 1.600rem;
+  padding-block:0.8rem ;
+  &:hover{
+      background-color: #ccc;
   }
+  &:active{
+      filter: invert(100%);
+  }
+}
+
+/*.td-container{
+  display: flex;
+  justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}*/
+
+td{
+  text-align: center;
+}

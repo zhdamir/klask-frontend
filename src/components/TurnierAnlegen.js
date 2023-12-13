@@ -61,33 +61,31 @@ const TurnierAnlegen = () => {
 
 
   return (
-    <div>
-      <h1>Create Turnier</h1>
-      <div>
-        <label>Titel:</label>
-        <input type="text" value={turnierTitel} onChange={(e) => setTurnierTitel(e.target.value)} />
-      </div>
-      <div>
-        <label>Start Datum:</label>
-        <input type="date" value={startDatum} onChange={(e) => setStartDatum(e.target.value)} />
-      </div>
-      <div>
-        <label>End Datum:</label>
-        <input type="date" value={endDatum} onChange={(e) => setEndDatum(e.target.value)} />
-      </div>
-      <div>
-        <label>Anzahl Gruppen:</label>
-        <input type="text" value={anzahlGruppen} onChange={(e) => setAnzahlGruppen(e.target.value)} />
-      </div>
+    <div className='turnier-container'>
+      <h1 className='turnier-anlegen'> Turnier anlegen</h1>
+     
+        <label className='label-titel'>Titel:</label>
+        <input className='input-titel' type="text" value={turnierTitel} onChange={(e) => setTurnierTitel(e.target.value)} />
       
-      <div>
-        <label>Status:</label>
-        <select value={isActive} onChange={(e) => setIsActive(e.target.value)}>
-          <option value="true">Active</option>
-          <option value="false">Inactive</option>
+     
+        <label className='label-startdatum'>Start Datum:</label>
+        <input className='input-startdatum' type="date" value={startDatum} onChange={(e) => setStartDatum(e.target.value)} />
+     
+        <label className='label-enddatum'>End Datum:</label>
+        <input className='input-enddatum' type="date" value={endDatum} onChange={(e) => setEndDatum(e.target.value)} />
+      
+        <label className='label-anzahl'>Anzahl Gruppen:</label>
+        <input className='input-anzahl' type="text" value={anzahlGruppen} onChange={(e) => setAnzahlGruppen(e.target.value)} />
+     
+        <label className='label-status'>Status:</label>
+        <select className='input-status' value={isActive} onChange={(e) => setIsActive(e.target.value)}>
+          <option value="true">Aktiv</option>
+          <option value="false">Inaktiv</option>
         </select>
-  </div>
-      <button className="create-turnier" onClick={handleCreateTurnier}>Turnier anlegen</button>
+     
+
+      <button className="btn-anlegen" onClick={handleCreateTurnier}>Turnier anlegen</button>
+
     </div>
   );
 };

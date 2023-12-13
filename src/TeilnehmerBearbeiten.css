@@ -2,7 +2,7 @@
 
     width: 60%;
     height: 70%;
-    background-color: rgb(7, 59, 105);
+    background-color: #B1C7DC;
     position: fixed;
     left: 23%;
     top: 17%;
@@ -12,18 +12,27 @@
 .bearbeiten-content{
     padding: 40px;
     display: grid;
-    grid-template-columns:  repeat(4,15vw) ;
+    grid-template-columns:  repeat(6,10vw) ;
     grid-template-rows: repeat(7,6vh);
     gap: 20px;
     
+}
+
+.ueberschrift-bearbeiten{
+  margin-right: 20px;
+    grid-column-start: 2;
+    grid-column-end: 6;
+    grid-row-start: 1;
+    grid-row-end: 1;
+
 }
 
 
   .label1 {
     
     margin-right: 10px;
-    grid-column-start: 1;
-    grid-column-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 2;
   }
@@ -31,8 +40,8 @@
   .label2 {
    
     margin-right: 10px;
-    grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-start: 2;
+    grid-column-end: 3;
     grid-row-start: 3;
     grid-row-end: 3;
   }
@@ -40,8 +49,8 @@
   .label3 {
    
     margin-right: 10px;
-    grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-start: 2;
+    grid-column-end: 3;
     grid-row-start: 4;
     grid-row-end: 4;
   }
@@ -49,8 +58,8 @@
   .label4 {
   
     margin-right: 10px;
-    grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-start: 2;
+    grid-column-end: 3;
     grid-row-start: 5;
     grid-row-end: 5;
   }
@@ -58,8 +67,8 @@
   .label5 {
    
     margin-right: 10px;
-    grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-start: 2;
+    grid-column-end: 3;
     grid-row-start: 6;
     grid-row-end: 6;
   }
@@ -67,8 +76,8 @@
   .input-box1 {
     
     margin-right: 10px;
-    grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column-start: 3;
+    grid-column-end: 6;
     grid-row-start: 2;
     grid-row-end: 2;
   }
@@ -76,8 +85,8 @@
   .input-box2 {
    
     margin-right: 10px;
-    grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column-start: 3;
+    grid-column-end: 6;
     grid-row-start: 3;
     grid-row-end: 3;
   }
@@ -85,8 +94,8 @@
   .input-box3 {
    
     margin-right: 10px;
-    grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column-start: 3;
+    grid-column-end: 6;
     grid-row-start: 4;
     grid-row-end: 4;
   }
@@ -94,8 +103,8 @@
   .input-box4 {
   
     margin-right: 10px;
-    grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column-start: 3;
+    grid-column-end: 6;
     grid-row-start: 5;
     grid-row-end: 5;
     font-size: 20px;
@@ -104,8 +113,8 @@
   .input-box5 {
    
     margin-right: 10px;
-    grid-column-start: 2;
-    grid-column-end: 4;
+    grid-column-start: 3;
+    grid-column-end: 6;
     grid-row-start: 6;
     grid-row-end: 6;
     font-size: 20px;
@@ -114,48 +123,63 @@
 
 
   .btn-speichern{
+
+    display: flex;
+  align-items: center;
+  justify-content: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 0 .3em black;
+    color: black;
+    padding-inline: 1.618rem;
+    padding-block:1rem ;
     margin-right: 10px;
-    grid-column-start: 2;
-    grid-column-end: 3;
+    margin-top: 20px;
+    grid-column-start: 4;
+    grid-column-end: 5;
     grid-row-start: 7;
     grid-row-end: 7;
-    font-size: 20px;
-    width: 200px;
-    height: 60px;
-    background-color: white;
+    &:hover{
+        background-color: #ccc;
+    }
+    &:active{
+        filter: invert(100%);
+    }
   
   }
 
   .btn-abbrechen{
+    display: flex;
+  align-items: center;
+  justify-content: center; 
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 0 .3em black;
+    color: black;
+    padding-inline: 1.618rem;
+    padding-block:1rem ;
     margin-right: 10px;
-    grid-column-start: 3;
-    grid-column-end: 4;
+    margin-top: 20px;
+    grid-column-start: 5;
+    grid-column-end: 6;
     grid-row-start: 7;
     grid-row-end: 7;
-    font-size: 20px;
-    width: 200px;
-    height: 60px;
-    background-color: white;
+    text-align: center;
+    &:hover{
+        background-color: #ccc;
+    }
+    &:active{
+        filter: invert(100%);
+    }
   
   }
   
-  .ueberschrift-bearbeiten{
-    margin-right: 10px;
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 1;
-  }
 
-  h2{
-    padding-block: .5rem;
-    color: white;
-}
 
-.label{
-  padding-block: .5rem;
-  color: white;
-}
+
+
 
   
   

@@ -60,7 +60,7 @@ const TeilnehmerAnlegen = () => {
 
   return (
     <div className='grid-container'>
-      <h2 className="ueberschrift-anlegen">Create Teilnehmer</h2>
+      <h1 className="teilnehmer-anlegen">Teilnehmer anlegen</h1>
      
         <label className="label label-vorname">Vorname:</label>
         <input className="input-vorname" type="text" value={vorname} onChange={(e) => setVorname(e.target.value)} />
@@ -95,7 +95,7 @@ const TeilnehmerAnlegen = () => {
           ))}
         </select>
      
-      <button className="btn-anlegen" onClick={handleCreateTeilnehmer}>Create Teilnehmer</button>
+      <button className="btn-anlegen" onClick={handleCreateTeilnehmer}>Teilnehmer anlegen</button>
     </div>
   );
 };

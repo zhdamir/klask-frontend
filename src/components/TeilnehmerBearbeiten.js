@@ -53,7 +53,7 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
   return (
     <Modal className="bearbeiten-modal" isOpen={open} onRequestClose={onClose}>
       <div className="bearbeiten-content">
-        <h2 className="ueberschrift-bearbeiten">Teilnehmer bearbeiten</h2>
+        <h1 className="ueberschrift-bearbeiten">Teilnehmer bearbeiten</h1>
        
           <label className="label label1">Vorname:</label>
           <input className="input-box1" type="text" value={editedTeilnehmer.vorname} onChange={(e) => setEditedTeilnehmer({ ...editedTeilnehmer, vorname: e.target.value })} />

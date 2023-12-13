@@ -30,7 +30,6 @@ function App(){
      <Header/>
     <div className="content">
       <Routes>
-        <Route path="/LoginPage" element={<LoginPage/>} />
         <Route path="/SpielerUebersicht" element={<SpielerUebersicht/>} /> {/* Define a route for SpielerUebersicht */}
         <Route path="/TurnierUebersicht" element={<TurnierUebersicht/>} /> {/* Define a route for TurnierUebersicht */}
         <Route path="/Uebersicht" element={<Uebersicht/>} /> {/* Define a route for Uebersicht */}

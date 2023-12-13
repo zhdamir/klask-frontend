@@ -97,7 +97,7 @@ function SpielerUebersicht() {
               <td>{teilnehmer.bereichName}</td>
               <td>{teilnehmer.bezeichnungRolle}</td>
               <td>
-                <button onClick={() => handleEditClick(teilnehmer)}>Bearbeiten</button>
+                <button className="submitScore" onClick={() => handleEditClick(teilnehmer)}>Bearbeiten</button>
               </td>
             </tr>
           ))}
