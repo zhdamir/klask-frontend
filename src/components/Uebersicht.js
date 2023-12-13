@@ -18,6 +18,9 @@ function Uebersicht() {
   const [gruppenResults, setGruppenResults] = useState([]);
   const [vorrundeResults, setVorrundeResults] = useState([]);
 
+  const [finaleStarted, setFinaleStarted] = useState(false);
+  const [finaleDetails, setFinaleDetails] = useState([]);
+
   const handleStartScreenClick = () => {
     // Hide the start screen and enable body overflow
     setStartScreenVisible(false);
@@ -73,8 +76,16 @@ function Uebersicht() {
         console.log('Vorrunde Results:', vorrundeResultsData);
         setVorrundeResults(vorrundeResultsData);
 
+        // Fetch vorrunden details for the active Turnier
+        const finaleResponse = await fetch('http://localhost:5222/api/runde/finaleDetails');
+        const finaleData = await finaleResponse.json();
+        console.log('Finale Details:', finaleData);
+        setFinaleDetails(finaleData);
+
+
         // Check if Vorrunde has started
     setVorrundeStarted(vorrundenData.length > 0);
+    setFinaleStarted(finaleData.length > 0);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -313,7 +324,7 @@ function Uebersicht() {
                 if (!acc[result.teilnehmerId]) {
                   // Add the teilnehmerId to the Set or object to mark it as processed
                   acc[result.teilnehmerId] = true;
-
+              
                   // Render the row for this Teilnehmer
                   return [
                     ...acc,
@@ -326,7 +337,7 @@ function Uebersicht() {
                     </tr>,
                   ];
                 }
-
+              
                 return acc;
               }, [])}
           </tbody>
@@ -335,9 +346,6 @@ function Uebersicht() {
     </div>
   ))}
 </div>
-
-
-
 
 {/* Display games for each group */}
 <div className='vorrunde-flex-container'>
@@ -460,6 +468,84 @@ function Uebersicht() {
         </table>
       </>
     )}
+  </div>
+</div>
+
+{/* Display games for each group */}
+<div className='vorrunde-flex-container'>
+    <div className="vorrundeInhalt">
+  {finaleStarted && (
+    <>
+      <h2>Finale</h2>
+      <table>
+        <thead>
+          <tr>
+            {/* Add headers for vorrundenDetails */}
+            
+            <th className="cellWithSpace">Teilnehmer 1</th>
+            <th className="cellWithSpace">Teilnehmer 2</th>
+            <th className="cellWithSpace">Punkte 1</th>
+            <th className="cellWithSpace">Punkte 2</th>
+            <th className="cellWithSpace">Spiel</th> {/* New column for Platz */}
+          </tr>
+        </thead>
+        <tbody>
+          {finaleDetails.map((teilnehmer1, index) => (
+            // Iterate over Teilnehmer pairs
+            finaleDetails.map((teilnehmer2, innerIndex) => {
+              // Check for duplicate pairs
+              if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
+                const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
+                const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
+
+                const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte;
+                const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte;
+
+                const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
+                // Determine Platz based on row index
+                const platz = index === 0 ? "Spiel um 1. Platz" : "Spiel um 3. Platz";
+
+                return (
+                  <tr key={rowKey}>
+                    <td className="cellWithSpace">{teilnehmer1.vorname}</td>
+                    <td className="cellWithSpace">{teilnehmer2.vorname}</td>
+                    <td className="cellWithSpace">
+                      <select
+                        value={score1 === null ? "" : score1}
+                        onChange={(e) => handleScoreChange(spielTeilnehmerId1, e.target.value)}
+                      >
+                        <option value="" disabled>
+                          Select Score
+                        </option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                    </td>
+                    <td className="cellWithSpace">
+                      <select
+                        value={score2 === null ? "" : score2}
+                        onChange={(e) => handleScoreChange(spielTeilnehmerId2, e.target.value)}
+                      >
+                        <option value="" disabled>
+                          Select Score
+                        </option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                    </td>
+                    <td className="cellWithSpace">{platz}</td>
+                  </tr>
+                );
+              }
+              return null;
+            })
+          ))}
+        </tbody>
+      </table>
+    </>
+  )}
   </div>
 </div>
 
