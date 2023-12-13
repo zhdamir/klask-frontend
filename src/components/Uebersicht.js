@@ -297,12 +297,12 @@ function Uebersicht() {
           ))}
 </div>
           
+
 {/* Display groups and their associated Ergebnisse */}
 <div className='results-flex-container'>
   {gruppenDetails.map((group) => (
     <div className="resultsInhalt" key={group.gruppeId}>
       <h2>{" Ergebnisse "+ group.gruppenname}</h2>
-
       {/* Check if gruppenResults for the current group is defined before mapping */}
       {gruppenResults && gruppenResults.length > 0 && (
         <table>
@@ -320,26 +320,31 @@ function Uebersicht() {
               .filter((result) => result.gruppeId === group.gruppeId)
               .sort((a, b) => b.satzDifferenz - a.satzDifferenz) // Sort by Sätze Diff in descending order
               .reduce((acc, result) => {
-                // Check if teilnehmerId is already in the Set or object
-                if (!acc[result.teilnehmerId]) {
-                  // Add the teilnehmerId to the Set or object to mark it as processed
-                  acc[result.teilnehmerId] = true;
+                // Initialize the accumulator if not done already
+                if (!acc.teilnehmerIds) {
+                  acc.teilnehmerIds = new Set();
+                  acc.rows = [];
+                }
+              
+                // Check if teilnehmerId is already in the Set
+                if (!acc.teilnehmerIds.has(result.teilnehmerId)) {
+                  // Add the teilnehmerId to the Set to mark it as processed
+                  acc.teilnehmerIds.add(result.teilnehmerId);
               
                   // Render the row for this Teilnehmer
-                  return [
-                    ...acc,
+                  acc.rows.push(
                     <tr key={result.teilnehmerId}>
                       <td className="cellWithSpace">{result.vorname}</td>
                       <td className="cellWithSpace">{result.anzahlSpiele}</td>
                       <td className="cellWithSpace">{result.anzahlSiege}</td>
                       <td className="cellWithSpace">{result.satzDifferenz}</td>
                       {/* Add other cells for additional Ergebnisse information */}
-                    </tr>,
-                  ];
+                    </tr>
+                  );
                 }
               
                 return acc;
-              }, [])}
+              }, { teilnehmerIds: new Set(), rows: [] }).rows}
           </tbody>
         </table>
       )}
