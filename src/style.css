@@ -103,12 +103,15 @@ form {
   /*von james*/
   border: 2px solid #15263D;
     border-radius: 20px;
-    background-color: #B1C7DC;
+    background-color: #B1C7DC55;
     padding: .6rem calc(.6rem * 1.618);
     margin: 1rem 3rem;
     min-height: calc(100vh - 20vh);
-    &> div{
+    &> div:has(.activeTurnierDaten){
         margin-block: 1.618rem;
+    }
+    &> div{
+      margin-block: 3rem;
     }
 }
 
