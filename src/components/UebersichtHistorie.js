@@ -11,7 +11,7 @@ function UebersichtHistorie() {
   const [gruppenrundenDetails, setGruppenrundenDetails] = useState([]);
   const [gruppenDetails, setGruppenDetails] = useState([]);
   const [scores, setScores] = useState({});
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [vorrundenDetails, setVorrundenDetails] = useState([]);
 
 

@@ -38,13 +38,13 @@ function TurnierErgebnisse() {
     };
 
     fetchData();
-  }, []);// Dependency array should be empty, as we only want to fetch data once on component mount
+  }, []);
 
   const handleErgebnisseClick = (turnier) => {
      // Check if turnier is not null before setting the selectedTurnierId
   if (turnier) {
     setSelectedTurnierId(turnier.id);
-    // Use navigate to move to the UebersichtHistorie page with the selected turnierId
+    // navigate to move to the UebersichtHistorie with the selected turnierId
     navigate(`/UebersichtHistorie/${turnier.id}`);
   } else {
     console.error('Error: Selected turnier is null.');
