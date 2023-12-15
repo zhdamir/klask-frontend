@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 import '../Uebersicht.css';
 
@@ -10,7 +9,6 @@ function UebersichtHistorie() {
 
   const [gruppenrundenDetails, setGruppenrundenDetails] = useState([]);
   const [gruppenDetails, setGruppenDetails] = useState([]);
-  const [scores, setScores] = useState({});
   //const navigate = useNavigate();
   const [vorrundenDetails, setVorrundenDetails] = useState([]);
 
@@ -91,18 +89,12 @@ console.log('Turnier Details:', turnierDetails);
 
     fetchData();
   }, []);
-  // Render content conditionally based on the availability of turnierDetails
-  if (!turnierDetails) {
-    return <p>Loading...</p>; // or display an error message
-  }
+  
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('de-DE', options);
   };
-
-  
-
  
   // Create a map to group Teilnehmer based on group
   const groupedTeilnehmerByGroup = gruppenrundenDetails.reduce((acc, detail) => {
@@ -113,12 +105,7 @@ console.log('Turnier Details:', turnierDetails);
     return acc;
   }, {});
 
-  const handleScoreChange = (spielTeilnehmerId, value) => {
-    setScores({
-      ...scores,
-      [spielTeilnehmerId]: value,
-    });
-  };
+
 
   return (
     
@@ -194,41 +181,14 @@ console.log('Turnier Details:', turnierDetails);
                           const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
                           const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
 
-                          const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte; // Use default score if not in scores
-                          const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte; // Use default score if not in scores
-
                           const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
 
                           return (
                             <tr /*key={index + '-' + innerIndex}*/key={rowKey}>
                               <td className="cellWithSpace">{teilnehmer1.vorname}</td>
                               <td className="cellWithSpace">{teilnehmer2.vorname}</td>
-                              <td className="cellWithSpace">
-                                <select
-                                value={score1 === null ? "" : score1}
-                                 
-                                >
-                                  <option value="" disabled>
-                                    Select Score
-                                  </option>
-                                  <option value="0">0</option>
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                </select>
-                              </td>
-                              <td className="cellWithSpace">
-                                <select
-                                  value={score2 === null ? "" : score2}
-                                  
-                                >
-                                  <option value="" disabled>
-                                    Select Score
-                                  </option>
-                                  <option value="0">0</option>
-                                  <option value="1">1</option>
-                                  <option value="2">2</option>
-                                </select>
-                              </td>
+                              <td className="cellWithSpace">{teilnehmer1.punkte}</td>
+                              <td className="cellWithSpace">{teilnehmer2.punkte}</td>
                             </tr>
                           );
                         }
@@ -321,8 +281,7 @@ console.log('Turnier Details:', turnierDetails);
                 const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
                 const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
 
-                const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte;
-                const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte;
+                
 
                 const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
 
@@ -330,32 +289,8 @@ console.log('Turnier Details:', turnierDetails);
                   <tr key={rowKey}>
                     <td className="cellWithSpace">{teilnehmer1.vorname}</td>
                     <td className="cellWithSpace">{teilnehmer2.vorname}</td>
-                    <td className="cellWithSpace">
-                      <select
-                        value={score1 === null ? "" : score1}
-                        
-                      >
-                        <option value="" disabled>
-                          Select Score
-                        </option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                      </select>
-                    </td>
-                    <td className="cellWithSpace">
-                      <select
-                        value={score2 === null ? "" : score2}
-                        
-                      >
-                        <option value="" disabled>
-                          Select Score
-                        </option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                      </select>
-                    </td>
+                    <td className="cellWithSpace">{teilnehmer1.punkte}</td>
+                    <td className="cellWithSpace">{teilnehmer2.punkte}</td>
                   </tr>
                 );
               }
@@ -447,8 +382,7 @@ console.log('Turnier Details:', turnierDetails);
                 const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
                 const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
 
-                const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte;
-                const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte;
+
 
                 const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
                 // Determine Platz based on row index
@@ -458,32 +392,9 @@ console.log('Turnier Details:', turnierDetails);
                   <tr key={rowKey}>
                     <td className="cellWithSpace">{teilnehmer1.vorname}</td>
                     <td className="cellWithSpace">{teilnehmer2.vorname}</td>
-                    <td className="cellWithSpace">
-                      <select
-                        value={score1 === null ? "" : score1}
-                       
-                      >
-                        <option value="" disabled>
-                          Select Score
-                        </option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                      </select>
-                    </td>
-                    <td className="cellWithSpace">
-                      <select
-                        value={score2 === null ? "" : score2}
-                        
-                      >
-                        <option value="" disabled>
-                          Select Score
-                        </option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                      </select>
-                    </td>
+                    <td className="cellWithSpace">{teilnehmer1.punkte}</td>
+                    <td className="cellWithSpace">{teilnehmer2.punkte}</td>
+                    
                     <td className="cellWithSpace">{platz}</td>
                   </tr>
                 );

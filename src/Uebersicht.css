@@ -78,6 +78,9 @@
     align-items: center;
     flex-wrap: wrap;
     margin: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
 }
 
 .vorrundeInhalt{
@@ -101,7 +104,7 @@
 .results-flex-container{
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     margin-block: 4rem;
     gap: 1rem;
