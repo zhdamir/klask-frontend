@@ -16,6 +16,7 @@ function UebersichtHistorie() {
   const [gruppenResults, setGruppenResults] = useState([]);
   const [vorrundeResults, setVorrundeResults] = useState([]);
   const [finaleDetails, setFinaleDetails] = useState([]);
+  const [spielUmDrittenDetails, setSpielUmDrittenDetails] = useState([]);
 
   
   useEffect(() => {
@@ -80,6 +81,13 @@ console.log('Turnier Details:', turnierDetails);
         console.log('Finale Details:', finaleData);
         setFinaleDetails(finaleData);
 
+        
+
+        // Fetch vorrunden details for the active Turnier
+        const spielUmDritenResponse = await fetch(`http://localhost:5222/api/runde/spielUmDrittenDetailsHistorie/${turnierId}`);
+        const spielUmDritenData = await spielUmDritenResponse.json();
+        console.log('Finale Details:', spielUmDritenData);
+        setSpielUmDrittenDetails(spielUmDritenData);
 
       
       } catch (error) {
@@ -370,7 +378,7 @@ console.log('Turnier Details:', turnierDetails);
             <th className="cellWithSpace">Teilnehmer 2</th>
             <th className="cellWithSpace">Punkte 1</th>
             <th className="cellWithSpace">Punkte 2</th>
-            <th className="cellWithSpace">Spiel</th> {/* New column for Platz */}
+            {/*<th className="cellWithSpace">Spiel</th> {/* New column for Platz */}
           </tr>
         </thead>
         <tbody>
@@ -386,7 +394,7 @@ console.log('Turnier Details:', turnierDetails);
 
                 const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
                 // Determine Platz based on row index
-                const platz = index === 0 ? "Spiel um 1. Platz" : "Spiel um 3. Platz";
+                //const platz = index === 0 ? "Spiel um 1. Platz" : "Spiel um 3. Platz";
 
                 return (
                   <tr key={rowKey}>
@@ -395,7 +403,7 @@ console.log('Turnier Details:', turnierDetails);
                     <td className="cellWithSpace">{teilnehmer1.punkte}</td>
                     <td className="cellWithSpace">{teilnehmer2.punkte}</td>
                     
-                    <td className="cellWithSpace">{platz}</td>
+                    {/*<td className="cellWithSpace">{platz}</td>*/}
                   </tr>
                 );
               }
@@ -408,6 +416,61 @@ console.log('Turnier Details:', turnierDetails);
   
   </div>
 </div>
+
+{/* Display games for each group */}
+<div className='vorrunde-flex-container'>
+    <div className="vorrundeInhalt">
+  
+    <>
+      <h2>Spiel Um Dritten</h2>
+      <table>
+        <thead>
+          <tr>
+            {/* Add headers for vorrundenDetails */}
+            
+            <th className="cellWithSpace">Teilnehmer 1</th>
+            <th className="cellWithSpace">Teilnehmer 2</th>
+            <th className="cellWithSpace">Punkte 1</th>
+            <th className="cellWithSpace">Punkte 2</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {spielUmDrittenDetails.map((teilnehmer1, index) => (
+            // Iterate over Teilnehmer pairs
+            spielUmDrittenDetails.map((teilnehmer2, innerIndex) => {
+              // Check for duplicate pairs
+              if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
+                const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
+                const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
+
+
+
+                const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
+                // Determine Platz based on row index
+               // const platz = index === 0 ? "Spiel um 1. Platz" : "Spiel um 3. Platz";
+
+                return (
+                  <tr key={rowKey}>
+                    <td className="cellWithSpace">{teilnehmer1.vorname}</td>
+                    <td className="cellWithSpace">{teilnehmer2.vorname}</td>
+                    <td className="cellWithSpace">{teilnehmer1.punkte}</td>
+                    <td className="cellWithSpace">{teilnehmer2.punkte}</td>
+                    
+                   
+                  </tr>
+                );
+              }
+              return null;
+            })
+          ))}
+        </tbody>
+      </table>
+    </>
+  
+  </div>
+</div>
+
 
 
 
