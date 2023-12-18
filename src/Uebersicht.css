@@ -137,7 +137,7 @@
     transition: all 2s;
     isolation: isolate;
 }
-.left, .right{
+/*.left, .right{
     position: relative;
     width: 50%;
     background-image: url(./resources/images/photo-1495696414638-78ee23f25668.jpg);
@@ -145,7 +145,28 @@
     background-repeat: no-repeat;
     background-size: cover;
     overflow: hidden;
+}*/
+
+.left{
+    position: relative;
+    width: 50%;
+    background-image: url(./resources/images/metall-textur-hintergrund-mit-nieten.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
 }
+
+.right{
+    position: relative;
+    width: 50%;
+    background-image: url(./resources/images/metall-textur-hintergrund-mit-nieten\ -\ Copy.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
 .left{
     border-right: solid 3px black;
 }
@@ -160,7 +181,8 @@
     border-radius: 50%;
     border: 5px solid black;
 }
-.left .klask-logo{right: 0;
+.left .klask-logo{
+    right: 0;
     transform: translateY(-50%)
                translateX(50%);
 }

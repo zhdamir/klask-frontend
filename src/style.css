@@ -23,6 +23,37 @@
   font-weight: bold;
 }
 
+
+:root {
+
+  /* blau-töne: (von dunkel zu hell) */
+  --blau-dark-1: #091723;
+  --blau-dark-2: hsla(215, 49%, 16%, 100%);
+  --blau-dark-3: #37506E;
+  --blau-light-4: #71A2E7;
+  --blau-light-5: #B1C7DC;
+  --blau-light-6: #C2D5E4;
+
+  /* weiß: */
+  --white: #ffffff;
+
+  /* rot: */
+  --rot: #E63201;
+
+  /* orange: */
+  --orange: #F25F04;
+
+  /* gelb: */
+  --gelb: #FED250;
+
+  --zit: rgb(17, 75, 111);
+
+  --transformX: 0px;
+  --transformY: 0px;
+  --rotate: 0deg;
+
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -35,11 +66,20 @@ html {
     color: #fff;
 }
 
+
 body {
   
     background-color: #0a169a;
     color: #15263D;
     background-color: white;
+    overflow: hidden;
+    overflow-x: hidden;
+    color: var(--blau-dark-2);
+    background-image: url(./resources/images/sexyBG.PNG);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     
 }
 
@@ -97,22 +137,31 @@ form {
 }
 
 .content{
-  
+  --transparent: .3;
   margin:1rem 3rem;
   min-height: calc(100vh - 20vh - 62px);
   /*von james*/
   border: 2px solid #15263D;
-    border-radius: 20px;
-    background-color: #B1C7DC55;
-    padding: .6rem calc(.6rem * 1.618);
-    margin: 1rem 3rem;
-    min-height: calc(100vh - 20vh);
+  border-radius: 20px;
+  background-color: #B1C7DC55;
+  border: 2px solid var(--blau-light-6);
+  border-radius: 20px;
+  background-color: #fff5;
+  background-image: linear-gradient(45deg, rgba(204, 156, 223, var(--transparent)) 0.3%,
+            rgba(155, 219, 245, var(--transparent)) 20.4%,
+            rgba(245, 183, 208, var(--transparent)) 40.2%,
+            rgba(250, 186, 98, var(--transparent)) 62.9%,
+            rgba(234, 238, 240, var(--transparent)) 81.9%,
+            rgba(250, 245, 171, var(--transparent)) 99.2%);
+  /*backdrop-filter: blur(5px);*/
+  padding: .6rem calc(.6rem * 1.618);
     &> div:has(.activeTurnierDaten){
         margin-block: 1.618rem;
     }
     &> div{
       margin-block: 3rem;
     }
+    
 }
 
 .footer{

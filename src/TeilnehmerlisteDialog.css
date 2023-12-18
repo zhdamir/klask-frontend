@@ -13,7 +13,7 @@
 }
 
 .teilnehmerListe-content{
-  padding: 50px;
+  
   overflow: auto;
   width: 60%;
   height: 70%;
@@ -25,3 +25,13 @@
   
 }
 
+.ueberschrift-bearbeiten{
+  position: sticky;
+  width: 100%;
+  top: 0;
+  background-color: rgb(7, 59, 105);
+  padding-block: 1rem;
+}
+ul{
+  margin: 1rem calc(1rem * 1.618);
+}
