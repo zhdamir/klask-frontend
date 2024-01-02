@@ -27,7 +27,7 @@
     justify-content: space-between;
     align-items: center;
     padding-inline: 1rem;
-    background-color: hsl(215, 30%, 30%);
+    background-color: hsla(215, 30%, 30%, 80%);
 }
 
 .list-items {

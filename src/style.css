@@ -80,6 +80,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    cursor: url(./resources/images/newCourser.svg),auto;
     
 }
 

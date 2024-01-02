@@ -118,6 +118,9 @@ function TurnierUebersicht() {
       });
   
       if (response.ok) {
+        // Call handleJahrespunkteUpdate after the Finale has started successfully
+      //await handleJahrespunkteUpdate(turnierId);
+
         // Handle success, e.g., redirect to Uebersicht page
        navigate("/TurnierUebersicht");
         console.log('Finale started successfully');
@@ -131,7 +134,35 @@ function TurnierUebersicht() {
       console.error('Error starting Finale:', error.message);
     }
   };
+
+  const handleJahrespunkteUpdate = async (turnierId) => {
+    try {
+      const response = await fetch(`http://localhost:5222/api/jahrestabelleteilnehmer/updateJahresPunkte?turnierId=${turnierId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // Optionally, include a request body if required by your API
+        body: JSON.stringify(/* your request payload */),
+      });
   
+      if (response.ok) {
+        // Handle success, e.g., redirect to Uebersicht page
+       // navigate("/TurnierUebersicht");
+        console.log('Jahrespunkte updated successfully');
+      } else {
+        // Handle error, e.g., show an error message
+        const errorText = await response.text(); // Read the error response
+        console.error('Error updating Jahrespunkte:', errorText);
+      }
+    } catch (error) {
+      // Handle exceptions appropriately
+      console.error('Error updating Jahrespunkte:', error.message);
+    }
+  };
+  
+
+
   
 
   

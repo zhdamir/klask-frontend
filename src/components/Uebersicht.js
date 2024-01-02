@@ -66,7 +66,7 @@ function Uebersicht() {
         console.log('Gruppen Results:', resultsData);
         setGruppenResults(resultsData);
 
-        // Fetch vorrunden details for the active Turnier
+        // Für das aktuelle Turnier Informationen holen
         const vorrundenResponse = await fetch('http://localhost:5222/api/runde/vorrundenDetails');
         const vorrundenData = await vorrundenResponse.json();
         console.log('Gruppenrunden Details:', vorrundenData);
@@ -166,6 +166,12 @@ function Uebersicht() {
       [spielTeilnehmerId]: value,
     });
   };
+
+
+
+
+
+
 
   return (
     <div>
