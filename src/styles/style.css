@@ -1,24 +1,24 @@
 @font-face{
   font-family: "clarika";
-  src: url(./resources/font/ClarikaGeometric-Regular.woff);
+  src: url(../resources/font/ClarikaGeometric-Regular.woff);
   font-style: normal;
   font-weight: normal;
 }
 @font-face{
   font-family: "clarika";
-  src: url(./resources/font/ClarikaGeometric-Italic.woff);
+  src: url(../resources/font/ClarikaGeometric-Italic.woff);
   font-style: italic;
   font-weight: normal;
 }
 @font-face{
   font-family: "clarika";
-  src: url(./resources/font/ClarikaGeometric-Bold.woff);
+  src: url(../resources/font/ClarikaGeometric-Bold.woff);
   font-style: normal;
   font-weight: bold;
 }
 @font-face {
   font-family: "clarika";
-  src: url(./resources/font/ClarikaGeometric-BoldItalic.woff);
+  src: url(../resources/font/ClarikaGeometric-BoldItalic.woff);
   font-style: italic;
   font-weight: bold;
 }
@@ -75,12 +75,12 @@ body {
     overflow: hidden;
     overflow-x: hidden;
     color: var(--blau-dark-2);
-    background-image: url(./resources/images/sexyBG.PNG);
+    background-image: url(../resources/images/sexyBG.PNG);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    cursor: url(./resources/images/newCourser.svg),auto;
+    cursor: url(../resources/images/newCourser.svg),auto;
     
 }
 

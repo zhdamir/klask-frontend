@@ -150,7 +150,7 @@
 .left{
     position: relative;
     width: 50%;
-    background-image: url(./resources/images/metall-textur-hintergrund-mit-nieten.jpg);
+    background-image: url(../resources/images/metall-textur-hintergrund-mit-nieten.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -160,7 +160,7 @@
 .right{
     position: relative;
     width: 50%;
-    background-image: url(./resources/images/metall-textur-hintergrund-mit-nieten\ -\ Copy.jpg);
+    background-image: url(../resources/images/metall-textur-hintergrund-mit-nieten\ -\ Copy.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

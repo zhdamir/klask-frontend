@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import "../TeilnehmerBearbeiten.css";
+import "../styles/TeilnehmerBearbeiten.css";
 
 /*props als Parameter: open (boolean, ob das Modal geöffnet ist oder nicht), 
 onClose (Funktion Modal schließen), teilnehmer (zu bearbeitender Teilnehmer), 

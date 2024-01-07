@@ -1,7 +1,6 @@
 
 //import TurnierCaller from './components/TurnierCaller';
-import './style.css';
-import LoginPage from './components/LoginPage';
+import './styles/style.css';
 import SpielerUebersicht from './components/SpielerUebersicht';
 import TurnierUebersicht from './components/TurnierUebersicht';
 import Uebersicht from './components/Uebersicht';
@@ -13,7 +12,7 @@ import TurnierAnlegen from './components/TurnierAnlegen';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import TurnierErgebnisse from './components/TurnierErgebnisse';
-import './Header.css';
+import './styles/Header.css';
 import UebersichtHistorie from './components/UebersichtHistorie';
 
 

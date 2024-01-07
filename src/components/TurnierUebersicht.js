@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import TeilnehmerlisteDialog from './TeilnehmerlisteDialog';
 import { useNavigate } from 'react-router-dom';
 
-import "../TurnierUebersicht.css";
+import "../styles/TurnierUebersicht.css";
 
 function TurnierUebersicht() {
   const [turnierList, setTurnierList] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../TurnierAnlegen.css';
+import '../styles/TurnierAnlegen.css';
 const TurnierAnlegen = () => {
   const [turnierTitel, setTurnierTitel] = useState('');
   const [startDatum, setStartDatum] = useState('');

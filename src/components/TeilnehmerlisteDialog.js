@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import "../TeilnehmerlisteDialog.css";
+import "../styles/TeilnehmerlisteDialog.css";
 
 const TeilnehmerlisteDialog = ({ open, onClose,teilnehmerList, turnier }) => {
 

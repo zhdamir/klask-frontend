@@ -4,7 +4,7 @@ import TeilnehmerlisteDialog from './TeilnehmerlisteDialog';
 import { useNavigate } from 'react-router-dom';
 import UebersichtHistorie from './UebersichtHistorie';
 
-import "../TurnierUebersicht.css";
+import "../styles/TurnierUebersicht.css";
 
 function TurnierErgebnisse() {
   const [turnierList, setTurnierList] = useState([]);

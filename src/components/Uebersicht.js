@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import '../Uebersicht.css';
+import '../styles/Uebersicht.css';
 
 function Uebersicht() {
   const [turnierList, setTurnierList] = useState([]);

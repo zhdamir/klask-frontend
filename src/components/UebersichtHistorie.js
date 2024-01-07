@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import '../Uebersicht.css';
+import '../styles/Uebersicht.css';
 
 function UebersichtHistorie() {
   const { turnierId } = useParams();

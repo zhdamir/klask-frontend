@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TeilnehmerBearbeiten from './TeilnehmerBearbeiten';
-import '../SpielerUebersicht.css';
+import '../styles/SpielerUebersicht.css';
 
 function SpielerUebersicht() {
   const [teilnehmerList, setTeilnehmerList] = useState([]);
