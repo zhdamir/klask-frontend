@@ -1,4 +1,4 @@
-.bearbeiten-modal{/* Set your desired width and height */
+.bearbeiten-modal{
 
     width: 60%;
     height: 70%;
@@ -6,19 +6,55 @@
     position: fixed;
     left: 23%;
     top: 17%;
+    background-color: #0a169a;
+    color: #15263D;
+    background-color: white;
+    overflow: hidden;
+    overflow-x: hidden;
+    color: var(--blau-dark-2);
+    background-image: url(../resources/images/sexyBG.PNG);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    cursor: url(../resources/images/newCourser.svg),auto;
 
+}
+
+.teilnehmer-bearbeiten-content{
+  --transparent: .3;
+  background-color: #B1C7DC55;
+  border: 2px solid var(--blau-light-6);
+  background-color: #fff5;
+  background-image: linear-gradient(45deg, rgba(204, 156, 223, var(--transparent)) 0.3%,
+            rgba(155, 219, 245, var(--transparent)) 20.4%,
+            rgba(245, 183, 208, var(--transparent)) 40.2%,
+            rgba(250, 186, 98, var(--transparent)) 62.9%,
+            rgba(234, 238, 240, var(--transparent)) 81.9%,
+            rgba(250, 245, 171, var(--transparent)) 99.2%);
+  /*backdrop-filter: blur(5px);*/
+  padding: .6rem calc(.6rem * 1.618);
+    &> div:has(.activeTurnierDaten){
+        margin-block: 1.618rem;
+    }
+    &> div{
+      margin-block: 1rem;
+    }
+    
 }
 
 .bearbeiten-content{
     padding: 40px;
     display: grid;
-    grid-template-columns:  repeat(6,10vw) ;
+    /*grid-template-columns:  repeat(6,10vw) ;*/
+    grid-template-columns: minmax(0, 5vw) repeat(4, minmax(0, 10vw)), minmax(0,5vw);
     grid-template-rows: repeat(7,6vh);
     gap: 20px;
     
+    
 }
 
-.ueberschrift-bearbeiten{
+.ueberschrift-bearbeitenChanged{
   margin-right: 20px;
     grid-column-start: 2;
     grid-column-end: 6;

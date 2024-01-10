@@ -200,3 +200,7 @@
     transition: 1s all;
     transform: translateX(-100%);
 }
+
+.headerTable{
+    padding-left: 20px;
+}

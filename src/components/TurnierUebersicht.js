@@ -5,6 +5,7 @@ import TeilnehmerlisteDialog from './TeilnehmerlisteDialog';
 import { useNavigate } from 'react-router-dom';
 
 import "../styles/TurnierUebersicht.css";
+import "../styles/Uebersicht.css";
 
 function TurnierUebersicht() {
   const [turnierList, setTurnierList] = useState([]);
@@ -169,7 +170,7 @@ function TurnierUebersicht() {
   return (
     <div className='turnier-flex-container'>
     <div className='turnierListe'>
-      <h2>Turnierliste</h2>
+      <h2 className='headerTable'>Turnierliste</h2>
       <table>
         <thead>
           <tr>

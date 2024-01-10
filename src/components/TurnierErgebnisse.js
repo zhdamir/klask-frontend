@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import UebersichtHistorie from './UebersichtHistorie';
 
 import "../styles/TurnierUebersicht.css";
+import "../styles/Uebersicht.css";
 
 function TurnierErgebnisse() {
   const [turnierList, setTurnierList] = useState([]);
@@ -60,7 +61,7 @@ function TurnierErgebnisse() {
   return (
     <div className='turnier-flex-container'>
     <div className='turnierListe'>
-      <h2>Turnierliste</h2>
+      <h2 className='headerTable'>Turnierliste</h2>
       <table>
         <thead>
           <tr>

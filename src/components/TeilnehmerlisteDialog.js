@@ -81,7 +81,13 @@ const TeilnehmerlisteDialog = ({ open, onClose,teilnehmerList, turnier }) => {
   return (
     <Modal className="teilnehmerListe-modal" isOpen={open} onRequestClose={onClose}>
       <div className="teilnehmerListe-content">
-        <h2 className="ueberschrift-bearbeiten">Teilnehmerliste</h2>
+
+        <div className='dialog-content'>
+          <div className='heading1'>
+            <div className='heading2'>
+              <h2 className="ueberschrift-bearbeiten-dlg">Teilnehmerliste</h2>
+            </div>
+          </div>
         <ul>
           {teilnehmerList.map((teilnehmer) => (
             <li key={teilnehmer.teilnehmerId}>
@@ -94,9 +100,14 @@ const TeilnehmerlisteDialog = ({ open, onClose,teilnehmerList, turnier }) => {
             </li>
           ))}
         </ul>
-        <button onClick={handleSave}>Save</button>
-        <button onClick={onClose}>Cancel</button>
+       
       </div>
+      </div>
+
+      <div className='btn-container'>
+        <button className='btn-speichern' onClick={handleSave}>Speichern</button>
+        <button className='btn-abbrechen' onClick={onClose}>Abbrechen</button>
+        </div>
     </Modal>
   );
 };

@@ -175,7 +175,7 @@ function Uebersicht() {
 
   return (
     <div>
-       {startScreenVisible && (
+       {/*startScreenVisible && (
        <div className="start-screen" onClick={handleStartScreenClick}>
         <div className="left">
             <div className="klask-logo">
@@ -187,7 +187,7 @@ function Uebersicht() {
                 <img src="/klask_logo.svg" alt="klask" height="400"/>
             </div>
         </div>
-    </div>)}
+       </div>)*/}
       {activeTurnierFound ? (
         <>
        
@@ -243,7 +243,7 @@ function Uebersicht() {
           <div className='gruppenSpiele-flex-container'>
             {Object.entries(groupedTeilnehmerByGroup).map(([groupName, groupTeilnehmer]) => (
               <div className="gruppeSpieleInhalt" key={groupName}>
-                <h2>Begegnungen {groupName} </h2>
+                <h2 className="headerTable">Begegnungen {groupName} </h2>
                 <table>
                   <thead>
                     <tr>
@@ -316,7 +316,7 @@ function Uebersicht() {
 <div className='results-flex-container'>
   {gruppenDetails.map((group) => (
     <div className="resultsInhalt" key={group.gruppeId}>
-      <h2>{" Ergebnisse "+ group.gruppenname}</h2>
+      <h2 className="headerTable">{" Ergebnisse "+ group.gruppenname}</h2>
       {/* Check if gruppenResults for the current group is defined before mapping */}
       {gruppenResults && gruppenResults.length > 0 && (
         <table>
@@ -371,7 +371,7 @@ function Uebersicht() {
     <div className="vorrundeInhalt">
   {vorrundeStarted && (
     <>
-      <h2>Vorrunden</h2>
+      <h2 className="headerTable">Vorrunden</h2>
       <table>
         <thead>
           <tr>
@@ -444,7 +444,7 @@ function Uebersicht() {
   <div className="vorrundeInhalt">
     {vorrundeStarted && (
       <>
-        <h2>Vorrunden Ergebnisse</h2>
+        <h2 className="headerTable">Vorrunden Ergebnisse</h2>
         <table>
           <thead>
             <tr>
@@ -495,7 +495,7 @@ function Uebersicht() {
     <div className="vorrundeInhalt">
   {finaleStarted && (
     <>
-      <h2>Finale</h2>
+      <h2 className='headerTable'>Finale</h2>
       <table>
         <thead>
           <tr>
@@ -573,7 +573,7 @@ function Uebersicht() {
     <div className="vorrundeInhalt">
   {finaleStarted && (
     <>
-      <h2>Spiel um Dritten</h2>
+      <h2 className='headerTable'>Spiel um Dritten</h2>
       <table>
         <thead>
           <tr>

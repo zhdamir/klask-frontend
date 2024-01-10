@@ -1,6 +1,6 @@
 .teilnehmerListe-modal{/* Set your desired width and height */
 
-  width: 60%;
+  width: 50%;
   height: 70%;
   background-color: rgb(7, 59, 105);
   position: fixed;
@@ -9,13 +9,64 @@
   padding: 40px;
   overflow-y: auto; /* Add this line to enable vertical scrolling */
   max-height: 80vh; /* Add a maximum height to the container */
+  background-color: #0a169a;
+  color: #15263D;
+  background-color: white;
+  overflow: hidden;
+  overflow-x: hidden;
+  color: var(--blau-dark-2);
+  background-image: url(../resources/images/sexyBG.PNG);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  cursor: url(../resources/images/newCourser.svg),auto;
+  position: relative;
 
 }
 
+.dialog-content{
+  --transparent: .3;
+  background-color: #B1C7DC55;
+  border: 2px solid var(--blau-light-6);
+  background-color: #fff5;
+  background-image: linear-gradient(45deg, rgba(204, 156, 223, var(--transparent)) 0.3%,
+            rgba(155, 219, 245, var(--transparent)) 20.4%,
+            rgba(245, 183, 208, var(--transparent)) 40.2%,
+            rgba(250, 186, 98, var(--transparent)) 62.9%,
+            rgba(234, 238, 240, var(--transparent)) 81.9%,
+            rgba(250, 245, 171, var(--transparent)) 99.2%);
+  /*backdrop-filter: blur(5px);*/
+  padding: .6rem calc(.6rem * 1.618);
+    &> div:has(.activeTurnierDaten){
+        margin-block: 1.618rem;
+    }
+    &> div{
+      margin-block: 1rem;
+    }
+}
+
 .teilnehmerListe-content{
-  
   overflow: auto;
-  width: 60%;
+  background-color: rgb(7, 59, 105);
+  position: fixed;
+  left: 23%;
+  top: 17%;
+  overflow: auto; /* Enable overall modal scrolling */
+  background-color: #0a169a;
+  color: #15263D;
+  background-color: white;
+  overflow: hidden;
+  overflow-x: hidden;
+  color: var(--blau-dark-2);
+  background-image: url(../resources/images/sexyBG.PNG);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  cursor: url(../resources/images/newCourser.svg),auto;
+  overflow: auto;
+  width: 50%;
   height: 70%;
   background-color: rgb(7, 59, 105);
   position: fixed;
@@ -25,13 +76,123 @@
   
 }
 
-.ueberschrift-bearbeiten{
+.ueberschrift-bearbeiten-dlg{
   position: sticky;
   width: 100%;
   top: 0;
-  background-color: rgb(7, 59, 105);
   padding-block: 1rem;
 }
 ul{
   margin: 1rem calc(1rem * 1.618);
+}
+
+.heading1 {
+  position: sticky;
+  top: 0;
+  padding: 2rem;
+  overflow: hidden;
+  color: var(--blau-dark-2);
+  background-image: url(../resources/images/sexyBG.PNG);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  cursor: url(../resources/images/newCourser.svg), auto;
+}
+
+.heading2 {
+  width: 100%;
+  height: 100%;
+  --transparent: 0.3;
+  background-color: #fff5;
+  background-image: linear-gradient(
+    45deg,
+    rgba(204, 156, 223, var(--transparent)) 0.9%,
+    rgba(155, 219, 245, var(--transparent)) 20.4%,
+    rgba(245, 183, 208, var(--transparent)) 40.2%,
+    rgba(250, 186, 98, var(--transparent)) 62.9%,
+    rgba(234, 238, 240, var(--transparent)) 81.9%,
+    rgba(250, 245, 171, var(--transparent)) 99.2%
+  );
+  box-sizing: border-box;
+  margin: 0; /* Remove default margin */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+ul {
+  margin: 1rem; /* Add some margin around the entire list */
+}
+
+li {
+  margin-bottom: 0.5rem; /* Adjust the margin between list items */
+}
+
+input[type="checkbox"] {
+  margin-right: 0.5rem; /* Adjust the margin between checkbox and text */
+  
+}
+
+
+.btn-speichern{
+  display: flex;
+align-items: center;
+justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 .3em black;
+  color: black;
+  padding-inline: 1.618rem;
+  padding-block:1rem ;
+  margin-right: 10px;
+  margin-top: 20px;
+  grid-column-start: 4;
+  grid-column-end: 5;
+  grid-row-start: 7;
+  grid-row-end: 7;
+  &:hover{
+      background-color: #ccc;
+  }
+  &:active{
+      filter: invert(100%);
+  }
+
+}
+
+.btn-abbrechen{
+  display: flex;
+align-items: center;
+justify-content: center; 
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 0 .3em black;
+  color: black;
+  padding-inline: 1.618rem;
+  padding-block:1rem ;
+  margin-right: 10px;
+  margin-top: 20px;
+  grid-column-start: 5;
+  grid-column-end: 6;
+  grid-row-start: 7;
+  grid-row-end: 7;
+  text-align: center;
+  &:hover{
+      background-color: #ccc;
+  }
+  &:active{
+      filter: invert(100%);
+  }
+}
+
+.btn-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
 }

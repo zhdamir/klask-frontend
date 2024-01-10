@@ -72,8 +72,8 @@ body {
     background-color: #0a169a;
     color: #15263D;
     background-color: white;
-    overflow: hidden;
-    overflow-x: hidden;
+    /*overflow: hidden;
+    overflow-x: hidden;*/
     color: var(--blau-dark-2);
     background-image: url(../resources/images/sexyBG.PNG);
     background-position: center;
