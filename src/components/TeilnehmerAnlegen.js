@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/TeilnehmerAnlegen.css';
 
 const TeilnehmerAnlegen = () => {
+
+  // State-Hooks für die Eingabefelder und Auswahlmöglichkeiten
   const [vorname, setVorname] = useState('');
   const [nachname, setNachname] = useState('');
   const [email, setEmail] = useState('');
@@ -13,6 +15,8 @@ const TeilnehmerAnlegen = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+     // Daten beim Mounten der Komponente holen
     const fetchData = async () => {
       try {
         // Fetch Bereich data
@@ -32,6 +36,7 @@ const TeilnehmerAnlegen = () => {
     fetchData(); // Initial fetch
   }, []);
 
+  // Funktion zum Erstellen eines neuen Teilnehmers
   const handleCreateTeilnehmer = async () => {
     try {
       const response = await fetch('http://localhost:5222/api/teilnehmer', {
@@ -49,7 +54,7 @@ const TeilnehmerAnlegen = () => {
       });
 
       if (response.ok) {
-        navigate("/SpielerUebersicht");
+        navigate("/SpielerUebersicht"); // Erfolgreich erstellten Teilnehmer anzeigen
       } else {
         console.error('Error creating Teilnehmer:', response.statusText);
       }
@@ -58,6 +63,7 @@ const TeilnehmerAnlegen = () => {
     }
   };
 
+   // JSX für die Komponente
   return (
     <div className='grid-container'>
       <h1 className="teilnehmer-anlegen">Teilnehmer anlegen</h1>

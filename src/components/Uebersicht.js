@@ -4,6 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/Uebersicht.css';
 
 function Uebersicht() {
+  // States für die Liste der Turniere, Gruppenrunden-Details, Gruppen-Details, 
+  // Status des aktiven Turniers, Punkte, Navigation, Vorrunden-Details, 
+  // Vorrunde gestartet, Sichtbarkeit des Startbildschirms, Gruppen- und Vorrunden-Ergebnisse, 
+  // Finale gestartet, Finale-Details und Details für das Spiel um den Dritten
+ 
   const [turnierList, setTurnierList] = useState([]);
   const [gruppenrundenDetails, setGruppenrundenDetails] = useState([]);
   const [gruppenDetails, setGruppenDetails] = useState([]);
@@ -12,7 +17,6 @@ function Uebersicht() {
   const navigate = useNavigate();
   const [vorrundenDetails, setVorrundenDetails] = useState([]);
   const [vorrundeStarted, setVorrundeStarted] = useState(false);
-  const [startScreenVisible, setStartScreenVisible] = useState(true); //
 
 
   const [gruppenResults, setGruppenResults] = useState([]);
@@ -23,20 +27,16 @@ function Uebersicht() {
 
   const [spielUmDrittenDetails, setSpielUmDrittenDetails] = useState([]);
 
-  const handleStartScreenClick = () => {
-    // Hide the start screen and enable body overflow
-    setStartScreenVisible(false);
-    document.querySelector('body').style.overflowY = 'auto';
-  };
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch all Turniere
+        // alle Turniereholen
         const turnierResponse = await fetch('http://localhost:5222/api/turnier');
         const turnierData = await turnierResponse.json();
 
-        // Find the active Turnier
+        // aktives  Turnier finden
         const activeTurnierList = turnierData.filter((turnier) => turnier.isActive);
 
         if (activeTurnierList.length === 0) {
@@ -45,53 +45,53 @@ function Uebersicht() {
           return;
         }
 
-        // Set the active turnier
+        
         setTurnierList(activeTurnierList);
 
-        // Fetch turnier details (groups with participants) for the active Turnier
+        // Details zu den Gruppen abrufen
         const gruppenResponse = await fetch('http://localhost:5222/api/turnier/currentTurnierDetails');
         const gruppenData = await gruppenResponse.json();
         console.log('Gruppen Details:', gruppenData);
         setGruppenDetails(gruppenData);
 
-        // Fetch turnier details (groups with participants) for the active Turnier
+        // Turnierdetails zu der Gruppenvorrunde abrufen
         const detailsResponse = await fetch('http://localhost:5222/api/turnier/gruppenrundenDetails');
         const detailsData = await detailsResponse.json();
         console.log('Gruppenrunden Details:', detailsData);
         setGruppenrundenDetails(detailsData);
 
-        // Fetch turnier details (groups with participants) for the active Turnier
-        const gruppenResultsResponse = await fetch('http://localhost:5222/api/turnier/gruppenrundenResults');
+       // Turnierdetails zu den Gruppenrunden Ergebnissen abrufen
+       const gruppenResultsResponse = await fetch('http://localhost:5222/api/turnier/gruppenrundenResults');
         const resultsData = await gruppenResultsResponse.json();
         console.log('Gruppen Results:', resultsData);
         setGruppenResults(resultsData);
 
-        // Für das aktuelle Turnier Informationen holen
+        //Details zur Vorrunde abrufen
         const vorrundenResponse = await fetch('http://localhost:5222/api/runde/vorrundenDetails');
         const vorrundenData = await vorrundenResponse.json();
         console.log('Gruppenrunden Details:', vorrundenData);
         setVorrundenDetails(vorrundenData);
 
-        // Fetch turnier details (groups with participants) for the active Turnier
+        // Details zu den Vorrundenergebnissen abrufen
         const vorrundeResultsResponse = await fetch('http://localhost:5222/api/runde/vorrundenResults');
         const vorrundeResultsData = await vorrundeResultsResponse.json();
         console.log('Vorrunde Results:', vorrundeResultsData);
         setVorrundeResults(vorrundeResultsData);
 
-        // Fetch vorrunden details for the active Turnier
+        // Details zu der finalen Runde abrufen
         const finaleResponse = await fetch('http://localhost:5222/api/runde/finaleDetails');
         const finaleData = await finaleResponse.json();
         console.log('Finale Details:', finaleData);
         setFinaleDetails(finaleData);
 
-        // Fetch vorrunden details for the active Turnier
+        // Deatils zu dem Spiel um den dritten Platz abrufen
         const spielUmDritenResponse = await fetch('http://localhost:5222/api/runde/spielUmDrittenDetails');
         const spielUmDrittenData = await spielUmDritenResponse.json();
         console.log('Spiel Um Dritten Details:', spielUmDrittenData);
         setSpielUmDrittenDetails(spielUmDrittenData);
 
 
-        // Check if Vorrunde has started
+       // Überprüfen, ob die Vorrunde gestartet wurde
     setVorrundeStarted(vorrundenData.length > 0);
     setFinaleStarted(finaleData.length > 0);
       } catch (error) {
@@ -102,11 +102,13 @@ function Uebersicht() {
     fetchData();
   }, [scores]);
 
+  // Funktion zum Formatieren des Datums
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('de-DE', options);
   };
 
+  // Funktion zum Aktualisieren der Punkte in der Datenbank
   const handleUpdatePunkte = async (spieleTeilnehmerId, neuePunkte) => {
     try {
       const response = await fetch(`http://localhost:5222/api/spielteilnehmer/updatePunkte/${spieleTeilnehmerId}`, {
@@ -118,32 +120,30 @@ function Uebersicht() {
       });
 
       if (response.ok) {
-        // Handle success, e.g., redirect to Uebersicht page
         navigate('/Uebersicht');
         console.log('Punkte updated successfully');
       } else {
-        // Handle error, e.g., show an error message
         console.error('Error updating punkte:', response.statusText);
       }
     } catch (error) {
-      // Handle exceptions appropriately
       console.error('Error updating punkte:', error.message);
     }
   };
 
+  // Funktion zum Spiechern der Punkte
   const handleSubmitScores = async () => {
     try {
-      // Loop through the scores and submit each score
+      //die Punkte und sende jeden Punktestand durchlaufen
       for (const [spielTeilnehmerId, score] of Object.entries(scores)) {
         console.log('Scores to submit:', scores);
 
-        // Convert score to an integer before sending
+         // Konvertiere Punkte vor dem Senden in eine Ganzzahl
         const parsedScore = parseInt(score, 10);
 
-        // Call the update punkte function
+        // Rufe die Funktion zum Aktualisieren der Punkte auf
         await handleUpdatePunkte(spielTeilnehmerId, parsedScore);
       }
-      // Optional: Reset scores after submission
+      
       setScores({});
       console.log('Scores submitted successfully');
     } catch (error) {
@@ -151,7 +151,7 @@ function Uebersicht() {
     }
   };
 
-  // Create a map to group Teilnehmer based on group
+  // Erstelle eine Map, um Teilnehmer nach Gruppe zu gruppieren
   const groupedTeilnehmerByGroup = gruppenrundenDetails.reduce((acc, detail) => {
     if (!acc[detail.gruppenname]) {
       acc[detail.gruppenname] = [];
@@ -168,26 +168,10 @@ function Uebersicht() {
   };
 
 
-
-
-
-
-
+ // JSX für die Komponente
   return (
     <div>
-       {/*startScreenVisible && (
-       <div className="start-screen" onClick={handleStartScreenClick}>
-        <div className="left">
-            <div className="klask-logo">
-                <img src="/klask_logo.svg" alt="klask" height="400"/>
-            </div>
-        </div>
-        <div className="right">
-            <div className="klask-logo">
-                <img src="/klask_logo.svg" alt="klask" height="400"/>
-            </div>
-        </div>
-       </div>)*/}
+       
       {activeTurnierFound ? (
         <>
        
@@ -206,26 +190,24 @@ function Uebersicht() {
     </div>
     </>
 ))}   
-          {/* Display groups and their associated Teilnehmer */}
+          {/*Gruppen und Teilnehmer anzeigen */}
           <div className='gruppe-flex-container'>
           {gruppenDetails.map((group) => (
             <>
                 <div className="gruppe-inhalt" key={group.gruppeId}>
                   <h2>{group.gruppenname}</h2>
-
-                  {/* Check if teilnehmer is defined before mapping */}
                   {group.teilnehmer && group.teilnehmer.length > 0 ? (
                     <table>
                       <thead>
                         <tr>
-                          {/* Add other columns as needed */}
+                          
                         </tr>
                       </thead>
                       <tbody>
                         {group.teilnehmer.map((teilnehmer) => (
                           <tr key={teilnehmer.teilnehmerId}>
                             <td className="cellWithSpace">{teilnehmer.vorname}</td>
-                            {/* Add other cells for additional Teilnehmer information */}
+                          
                           </tr>
                         ))}
                       </tbody>
@@ -239,7 +221,7 @@ function Uebersicht() {
         </div>
           <br />
 
-          {/* Display games for each group */}
+          {/* Spiele für jede Gruppe anzeigen*/}
           <div className='gruppenSpiele-flex-container'>
             {Object.entries(groupedTeilnehmerByGroup).map(([groupName, groupTeilnehmer]) => (
               <div className="gruppeSpieleInhalt" key={groupName}>
@@ -257,15 +239,15 @@ function Uebersicht() {
                     {groupTeilnehmer
                      .sort((a, b) => a.vorname.localeCompare(b.vorname))
                      .map((teilnehmer1, index) => (
-                      // Iterate over Teilnehmer pairs
+                      
                       groupTeilnehmer.map((teilnehmer2, innerIndex) => {
-                        // Check for duplicate pairs
+                      
                         if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
                           const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
                           const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
 
-                          const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte; // Use default score if not in scores
-                          const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte; // Use default score if not in scores
+                          const score1 = scores[spielTeilnehmerId1] || teilnehmer1.punkte; 
+                          const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte; 
 
                           const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
 
@@ -312,12 +294,11 @@ function Uebersicht() {
 </div>
           
 
-{/* Display groups and their associated Ergebnisse */}
+{/*Gruppenergebnisse anzeigen */}
 <div className='results-flex-container'>
   {gruppenDetails.map((group) => (
     <div className="resultsInhalt" key={group.gruppeId}>
       <h2 className="headerTable">{" Ergebnisse "+ group.gruppenname}</h2>
-      {/* Check if gruppenResults for the current group is defined before mapping */}
       {gruppenResults && gruppenResults.length > 0 && (
         <table>
           <thead>
@@ -326,33 +307,29 @@ function Uebersicht() {
               <th className="cellWithSpace">Anzahl Spiele</th>
               <th className="cellWithSpace">Anzahl Siege</th>
               <th className="cellWithSpace">Satz Diff</th>
-              {/* Add other columns as needed */}
             </tr>
           </thead>
           <tbody>
             {gruppenResults
               .filter((result) => result.gruppeId === group.gruppeId)
-              .sort((a, b) => b.satzDifferenz - a.satzDifferenz) // Sort by Sätze Diff in descending order
+              .sort((a, b) => b.satzDifferenz - a.satzDifferenz) // Nach Sätze Diff sortieren absteigend
               .reduce((acc, result) => {
-                // Initialize the accumulator if not done already
                 if (!acc.teilnehmerIds) {
                   acc.teilnehmerIds = new Set();
                   acc.rows = [];
                 }
               
-                // Check if teilnehmerId is already in the Set
                 if (!acc.teilnehmerIds.has(result.teilnehmerId)) {
-                  // Add the teilnehmerId to the Set to mark it as processed
                   acc.teilnehmerIds.add(result.teilnehmerId);
               
-                  // Render the row for this Teilnehmer
+                  
                   acc.rows.push(
                     <tr key={result.teilnehmerId}>
                       <td className="cellWithSpace">{result.vorname}</td>
                       <td className="cellWithSpace">{result.anzahlSpiele}</td>
                       <td className="cellWithSpace">{result.anzahlSiege}</td>
                       <td className="cellWithSpace">{result.satzDifferenz}</td>
-                      {/* Add other cells for additional Ergebnisse information */}
+                     
                     </tr>
                   );
                 }
@@ -366,7 +343,6 @@ function Uebersicht() {
   ))}
 </div>
 
-{/* Display games for each group */}
 <div className='vorrunde-flex-container'>
     <div className="vorrundeInhalt">
   {vorrundeStarted && (
@@ -375,7 +351,7 @@ function Uebersicht() {
       <table>
         <thead>
           <tr>
-            {/* Add headers for vorrundenDetails */}
+         
             <th className="cellWithSpace">Teilnehmer 1</th>
             <th className="cellWithSpace">Teilnehmer 2</th>
             <th className="cellWithSpace">Punkte 1</th>
@@ -384,9 +360,8 @@ function Uebersicht() {
         </thead>
         <tbody>
           {vorrundenDetails.map((teilnehmer1, index) => (
-            // Iterate over Teilnehmer pairs
+        
             vorrundenDetails.map((teilnehmer2, innerIndex) => {
-              // Check for duplicate pairs
               if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
                 const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
                 const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
@@ -439,7 +414,7 @@ function Uebersicht() {
   </div>
 </div>
 
-{/* Display games for each group */}
+
 <div className='vorrunde-flex-container'>
   <div className="vorrundeInhalt">
     {vorrundeStarted && (
@@ -448,7 +423,7 @@ function Uebersicht() {
         <table>
           <thead>
             <tr>
-              {/* Add headers for vorrundenDetails */}
+            
               <th className="cellWithSpace">Vorname</th>
               <th className="cellWithSpace">Anzahl Spiele</th>
               <th className="cellWithSpace">Anzahl Siege</th>
@@ -457,11 +432,11 @@ function Uebersicht() {
           </thead>
           <tbody>
             {vorrundeResults
-              .sort((a, b) => b.satzDifferenz - a.satzDifferenz) // Sort by Sätze Diff in descending order
+              .sort((a, b) => b.satzDifferenz - a.satzDifferenz) 
               .reduce((acc, result) => {
-                // Check if teilnehmerId is already in the acc array
+                
                 if (!acc.some((item) => item.teilnehmerId === result.teilnehmerId)) {
-                  // Add the result to the acc array
+                 
                   return [
                     ...acc,
                     {
@@ -490,7 +465,7 @@ function Uebersicht() {
   </div>
 </div>
 
-{/* Display games for each group */}
+
 <div className='vorrunde-flex-container'>
     <div className="vorrundeInhalt">
   {finaleStarted && (
@@ -499,20 +474,20 @@ function Uebersicht() {
       <table>
         <thead>
           <tr>
-            {/* Add headers for vorrundenDetails */}
+           
             
             <th className="cellWithSpace">Teilnehmer 1</th>
             <th className="cellWithSpace">Teilnehmer 2</th>
             <th className="cellWithSpace">Punkte 1</th>
             <th className="cellWithSpace">Punkte 2</th>
-            {/*<th className="cellWithSpace">Spiel</th> */}
+          
           </tr>
         </thead>
         <tbody>
           {finaleDetails.map((teilnehmer1, index) => (
-            // Iterate over Teilnehmer pairs
+        
             finaleDetails.map((teilnehmer2, innerIndex) => {
-              // Check for duplicate pairs
+           
               if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
                 const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
                 const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
@@ -521,8 +496,7 @@ function Uebersicht() {
                 const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte;
 
                 const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
-                // Determine Platz based on row index
-                //const platz = index === 0 ? "Spiel um 1. Platz" : "";
+               
 
                 return (
                   <tr key={rowKey}>
@@ -554,7 +528,7 @@ function Uebersicht() {
                         <option value="2">2</option>
                       </select>
                     </td>
-                    {/*<td className="cellWithSpace">{platz}</td>*/}
+              
                   </tr>
                 );
               }
@@ -568,7 +542,6 @@ function Uebersicht() {
   </div>
 </div>
 
-{/* Display games for each group */}
 <div className='vorrunde-flex-container'>
     <div className="vorrundeInhalt">
   {finaleStarted && (
@@ -577,20 +550,19 @@ function Uebersicht() {
       <table>
         <thead>
           <tr>
-            {/* Add headers for vorrundenDetails */}
-            
+          
             <th className="cellWithSpace">Teilnehmer 1</th>
             <th className="cellWithSpace">Teilnehmer 2</th>
             <th className="cellWithSpace">Punkte 1</th>
             <th className="cellWithSpace">Punkte 2</th>
-            {/*<th className="cellWithSpace">Spiel</th> */}
+        
           </tr>
         </thead>
         <tbody>
           {spielUmDrittenDetails.map((teilnehmer1, index) => (
-            // Iterate over Teilnehmer pairs
+           
             spielUmDrittenDetails.map((teilnehmer2, innerIndex) => {
-              // Check for duplicate pairs
+            
               if (innerIndex > index && teilnehmer1.spielId === teilnehmer2.spielId) {
                 const spielTeilnehmerId1 = teilnehmer1.spielTeilnehmerId;
                 const spielTeilnehmerId2 = teilnehmer2.spielTeilnehmerId;
@@ -599,8 +571,7 @@ function Uebersicht() {
                 const score2 = scores[spielTeilnehmerId2] || teilnehmer2.punkte;
 
                 const rowKey = `${spielTeilnehmerId1}-${spielTeilnehmerId2}`;
-                // Determine Platz based on row index
-                //const platz = index === 0 ? "Spiel um 3. Platz" : "";
+                
 
                 return (
                   <tr key={rowKey}>
@@ -632,7 +603,7 @@ function Uebersicht() {
                         <option value="2">2</option>
                       </select>
                     </td>
-                      {/*<td className="cellWithSpace">{platz}</td>*/}
+                
                   </tr>
                 );
               }
@@ -647,7 +618,6 @@ function Uebersicht() {
 </div>
 
 
-{/* Button to submit scores */}
 <button className="submitScore" onClick={handleSubmitScores}>Submit Scores</button>
         </>
       ) : (

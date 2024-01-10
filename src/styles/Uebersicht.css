@@ -137,15 +137,7 @@
     transition: all 2s;
     isolation: isolate;
 }
-/*.left, .right{
-    position: relative;
-    width: 50%;
-    background-image: url(./resources/images/photo-1495696414638-78ee23f25668.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    overflow: hidden;
-}*/
+
 
 .left{
     position: relative;

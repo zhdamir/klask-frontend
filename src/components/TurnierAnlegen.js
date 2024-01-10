@@ -2,26 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/TurnierAnlegen.css';
 const TurnierAnlegen = () => {
+
+  // States für die Eingabefelder des Turniers
   const [turnierTitel, setTurnierTitel] = useState('');
   const [startDatum, setStartDatum] = useState('');
   const [endDatum, setEndDatum] = useState('');
   const [anzahlGruppen, setAnzahlGruppen] = useState('');
   const [isActive, setIsActive] = useState(false);
   
-  // State to manage the visibility of the TeilnehmerlisteDialog
+  // State zur Verwaltung der Sichtbarkeit des TeilnehmerlisteDialogs
   const [teilnehmerDialogOpen, setTeilnehmerDialogOpen] = useState(false);
 
-  // State to store the list of Teilnehmer
+  // State zum Speichern der Liste der Teilnehmer
   const [teilnehmerList, setTeilnehmerList] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Funktion zum Abrufen der Teilnehmerdaten
     const fetchData = async () => {
       try {
-        // Fetch Teilnehmer data
+        // Teilnehmerdaten abrufen
         const teilnehmerResponse = await fetch('http://localhost:5222/api/teilnehmer');
         const teilnehmerData = await teilnehmerResponse.json();
+        // Teilnehmerliste setzen
         setTeilnehmerList(teilnehmerData);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -30,6 +34,7 @@ const TurnierAnlegen = () => {
     fetchData(); // Initial fetch
   }, []);
 
+   // Funktion zum Erstellen eines Turniers
   const handleCreateTurnier = async () => {
     try {
       const response = await fetch('http://localhost:5222/api/turnier', {
@@ -42,15 +47,16 @@ const TurnierAnlegen = () => {
           startDatum,
           endDatum,
           anzahlGruppen,
-          isActive: JSON.parse(isActive), // Convert to boolean
+          isActive: JSON.parse(isActive), // In Boolean konvertieren
         }),
       });
 
+      // Überprüfen, ob die Anfrage erfolgreich war
       if (response.ok) {
-        // Turnier created successfully
+        // Turnier erfolgreich erstellt, Navigation zur Turnierübersicht
         navigate("/TurnierUebersicht");
       } else {
-        // Handle error, show error message, etc.
+         // Fehler behandeln
         console.error('Error creating Turnier:', response.statusText);
       }
     } catch (error) {
@@ -59,7 +65,7 @@ const TurnierAnlegen = () => {
   };
 
 
-
+// JSX für die Komponente
   return (
     <div className='turnier-container'>
       <h1 className='turnier-anlegen'> Turnier anlegen</h1>

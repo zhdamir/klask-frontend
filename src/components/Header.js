@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom'; 
-import '../styles/Header.css';
-import'../styles/style.css';
+import '../styles/Header.css';  //  Styles für den Footer importieren
+import'../styles/style.css'; 
 import '../resources/fa-web/css/all.css'
 const Header = () => {
     return (

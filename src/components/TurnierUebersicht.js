@@ -1,4 +1,3 @@
-// Uebersicht.jsx
 
 import React, { useState, useEffect } from 'react';
 import TeilnehmerlisteDialog from './TeilnehmerlisteDialog';
@@ -8,6 +7,8 @@ import "../styles/TurnierUebersicht.css";
 import "../styles/Uebersicht.css";
 
 function TurnierUebersicht() {
+
+  //States für die Liste der Turniere, das ausgewählte Turnier, die Teilnehmerliste und die Sichtbarkeit des Teilnehmerdialogfelds
   const [turnierList, setTurnierList] = useState([]);
   const [teilnehmerDialogOpen, setTeilnehmerDialogOpen] = useState(false);
   const [selectedTurnier, setSelectedTurnier] = useState(null);
@@ -43,24 +44,26 @@ function TurnierUebersicht() {
     };
 
     fetchData();
-  }, []);// Dependency array should be empty, as we only want to fetch data once on component mount
+  }, []);
 
+   // Funktion zum Handhaben des Klicks auf "Teilnehmerliste" Button
   const handleTeilnehmerListeClick = (turnier) => {
-    // Check if turnier is not null before setting the selectedTurnier
-  if (turnier) {
+   // Überprüfen, ob das ausgewählte Turnier nicht null ist, bevor selectedTurnier gesetzt wird
+   if (turnier) {
     setSelectedTurnier(turnier);
-    //console.log("Turnier selected method hanldeTeilnehmerListeClick"+turnier);
     setTeilnehmerDialogOpen(true);
   } else {
     console.error('Error: Selected turnier is null.');
   }
   };
 
+  // Funktion zum Formatieren des Datums
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('de-DE', options);
   };
 
+  // Funktionen zum Starten vom Turnier
   const handleStartClick = async (turnierId) => {
     try {
       const response = await fetch(`http://localhost:5222/api/turnier/startTurnier?turnierId=${turnierId}`, {
@@ -71,20 +74,20 @@ function TurnierUebersicht() {
       });
   
       if (response.ok) {
-        // Handle success, e.g., redirect to Uebersicht page
+        // Erfolgreich gestartetes Turnier
        navigate("/TurnierUebersicht");
         console.log('Turnier started successfully');
       } else {
-        // Handle error, e.g., show an error message
+        //Fehler beim Starten des Turniers
         console.error('Error starting turnier:', response.statusText);
       }
       navigate("/TurnierUebersicht");
     } catch (error) {
-      // Handle exceptions appropriately
       console.error('Error starting turnier:', error.message);
     }
   };
 
+  // Funktionen zum Starten von der Vorrunde
   const handleVorrundeClick = async (turnierId) => {
     try {
       const response = await fetch(`http://localhost:5222/api/runde/startVorrunde?turnierId=${turnierId}`, {
@@ -95,20 +98,18 @@ function TurnierUebersicht() {
       });
   
       if (response.ok) {
-        // Handle success, e.g., redirect to Uebersicht page
        navigate("/TurnierUebersicht");
         console.log('Vorrunde started successfully');
       } else {
-        // Handle error, e.g., show an error message
         console.error('Error starting Vorrunde:', response.statusText);
       }
       navigate("/TurnierUebersicht");
     } catch (error) {
-      // Handle exceptions appropriately
       console.error('Error starting Vorrunde:', error.message);
     }
   };
 
+  // Funktionen zum Starten von der finalen Runde
   const handleFinaleClick = async (turnierId) => {
     try {
       const response = await fetch(`http://localhost:5222/api/runde/startFinale?turnierId=${turnierId}`, {
@@ -119,53 +120,18 @@ function TurnierUebersicht() {
       });
   
       if (response.ok) {
-        // Call handleJahrespunkteUpdate after the Finale has started successfully
-      //await handleJahrespunkteUpdate(turnierId);
-
-        // Handle success, e.g., redirect to Uebersicht page
        navigate("/TurnierUebersicht");
         console.log('Finale started successfully');
       } else {
-        // Handle error, e.g., show an error message
         console.error('Error starting Finale:', response.statusText);
       }
       navigate("/TurnierUebersicht");
     } catch (error) {
-      // Handle exceptions appropriately
       console.error('Error starting Finale:', error.message);
     }
   };
 
-  const handleJahrespunkteUpdate = async (turnierId) => {
-    try {
-      const response = await fetch(`http://localhost:5222/api/jahrestabelleteilnehmer/updateJahresPunkte?turnierId=${turnierId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // Optionally, include a request body if required by your API
-        body: JSON.stringify(/* your request payload */),
-      });
-  
-      if (response.ok) {
-        // Handle success, e.g., redirect to Uebersicht page
-       // navigate("/TurnierUebersicht");
-        console.log('Jahrespunkte updated successfully');
-      } else {
-        // Handle error, e.g., show an error message
-        const errorText = await response.text(); // Read the error response
-        console.error('Error updating Jahrespunkte:', errorText);
-      }
-    } catch (error) {
-      // Handle exceptions appropriately
-      console.error('Error updating Jahrespunkte:', error.message);
-    }
-  };
-  
-
-
-  
-
+// JSX für die Komponente
   
   return (
     <div className='turnier-flex-container'>

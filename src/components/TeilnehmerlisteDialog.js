@@ -4,22 +4,30 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import "../styles/TeilnehmerlisteDialog.css";
 
+/*
+  Props als Parameter:
+  - open (boolean, ob das Modal geöffnet ist oder nicht)
+  - onClose (Funktion zum Schließen des Modals)
+  - teilnehmerList (Array der Teilnehmer für das aktuelle Turnier)
+  - turnier (ausgewähltes Turnier)
+*/
 const TeilnehmerlisteDialog = ({ open, onClose,teilnehmerList, turnier }) => {
 
-  //array to contain all the selected/checked Teilnehmer
+  // Array zum Speichern aller ausgewählten/ausgecheckten Teilnehmer
   const [selectedTeilnehmer, setSelectedTeilnehmer] = useState([]);
   const [teilnehmerDialogOpen, setTeilnehmerDialogOpen] = useState(false);
 
-  //These are fields necessary for POST method to TurnierTeilnehmer enpoint
+  // Felder für die POST-Methode zum TurnierTeilnehmer-Endpunkt
   const [teilnehmerId, setTeilnehmerId] = useState('');
   const [turnierId, setTurnierId] = useState('');
 
   useEffect(() => {
-    setSelectedTeilnehmer([]); // Clear the selectedTeilnehmer when the dialog opens
+    setSelectedTeilnehmer([]); // Die ausgewählten Teilnehmer löschen, wenn das Dialogfeld geöffnet wird
   }, [open]);
 
+  // Funktion zum Auswählen/Abwählen von Teilnehmern
   const handleTeilnehmerSelect = (teilnehmerId) => {
-    // Toggle the selection of Teilnehmer
+    // Die Auswahl des Teilnehmers umschalten
     setSelectedTeilnehmer((prevSelected) =>
       prevSelected.includes(teilnehmerId)
         ? prevSelected.filter((id) => id !== teilnehmerId)//// If teilnehmerId is already selected, remove it
@@ -27,16 +35,14 @@ const TeilnehmerlisteDialog = ({ open, onClose,teilnehmerList, turnier }) => {
     );
   };
 
- 
+ // Funktion zum Speichern der ausgewählten Teilnehmer für das Turnier
   const handleSave = async () => {
     try {
-      //setTurnierId(turnier.id);
+      
       setTurnierId(parseInt(turnier.id, 10));
       console.log(turnierId);
-      //const turnierId = turnier.id;
-      //const id=5;
 
-      // Iterate through selectedTeilnehmer and make a POST request for each
+      // Die ausgewählten Teilnehmer durchlaufen und für jeden eine POST-Anfrage machen
       for (const teilnehmerId of selectedTeilnehmer) {
         const response = await fetch(`http://localhost:5222/api/turnierteilnehmer`, {
           method: 'POST',
@@ -44,8 +50,6 @@ const TeilnehmerlisteDialog = ({ open, onClose,teilnehmerList, turnier }) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            //turnierId,
-            //teilnehmerIds: [teilnehmerId],
             turnierId: parseInt(turnier.id, 10),
             teilnehmerId:teilnehmerId,
           }),
@@ -57,17 +61,17 @@ const TeilnehmerlisteDialog = ({ open, onClose,teilnehmerList, turnier }) => {
         handleTeilnehmerListeClick();
       }
 
-      // Close the dialog
+      // Schließe das Dialogfeld
       onClose();
     } catch (error) {
       console.error('Error updating TurnierTeilnehmer:', error);
     }
   };
 
+  // Funktion zum Behandeln des Klicks auf den Teilnehmerliste-Button
   const handleTeilnehmerListeClick = (turnier) => {
-    // Check if turnier is not null before setting the selectedTurnier
+    // Überprüfen, ob turnier nicht null ist, bevor selectedTurnier gesetzt wird
   if (turnier) {
-    //setTurnierId(turnier.id);
     setTurnierId(parseInt(turnier.id, 10), () => {
       console.log(turnierId);
     });
@@ -78,6 +82,7 @@ const TeilnehmerlisteDialog = ({ open, onClose,teilnehmerList, turnier }) => {
   }
   };
 
+  // JSX für die Komponente
   return (
     <Modal className="teilnehmerListe-modal" isOpen={open} onRequestClose={onClose}>
       <div className="teilnehmerListe-content">

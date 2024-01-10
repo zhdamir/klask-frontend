@@ -8,21 +8,23 @@ import "../styles/TurnierUebersicht.css";
 import "../styles/Uebersicht.css";
 
 function TurnierErgebnisse() {
+
+  //States für die Liste der Turniere und das ausgewählte Turnier
   const [turnierList, setTurnierList] = useState([]);
   const [selectedTurnier, setSelectedTurnier] = useState(null);
   const navigate = useNavigate();
   const [selectedTurnierId, setSelectedTurnierId] = useState(null);
 
-
+// useEffekt für das Abrufen der Turnierdaten
   useEffect(() => {
     const fetchData = async () => {
       try {
 
-
-        //fetch Turnier Data
+ // Turnierdaten abrufen
         const turnierResponse = await fetch('http://localhost:5222/api/turnier');
         const turnierData = await turnierResponse.json();
 
+        // Daten für jedes Turnier anreichern (derzeit nicht benötigt)
         const enrichedData = await Promise.all(
           turnierData.map(async (turnier) => {
             return {
@@ -30,7 +32,7 @@ function TurnierErgebnisse() {
             };
           })
         );
-        
+        // Turnierliste setzen
         setTurnierList(enrichedData);
        
       } catch (error) {
@@ -41,23 +43,25 @@ function TurnierErgebnisse() {
     fetchData();
   }, []);
 
+   // Funktion zum Handhaben des Klicks auf "Ergebnisse einsehen"
   const handleErgebnisseClick = (turnier) => {
-     // Check if turnier is not null before setting the selectedTurnierId
+     // Überprüfen, ob das ausgewählte Turnier nicht null ist, bevor die selectedTurnierId gesetzt wird
   if (turnier) {
     setSelectedTurnierId(turnier.id);
-    // navigate to move to the UebersichtHistorie with the selected turnierId
+    // Navigieren zur UebersichtHistorie mit der ausgewählten turnierId
     navigate(`/UebersichtHistorie/${turnier.id}`);
   } else {
     console.error('Error: Selected turnier is null.');
   }
   };
 
+  // Funktion zum Formatieren des Datums
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
     return new Date(dateString).toLocaleDateString('de-DE', options);
   };
 
-  
+   // JSX für die Komponente
   return (
     <div className='turnier-flex-container'>
     <div className='turnierListe'>

@@ -2,17 +2,24 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import "../styles/TeilnehmerBearbeiten.css";
 
-/*props als Parameter: open (boolean, ob das Modal geöffnet ist oder nicht), 
-onClose (Funktion Modal schließen), teilnehmer (zu bearbeitender Teilnehmer), 
-onUpdateTeilnehmer (func zum Aktualisieren der Teilnehmerdaten), 
-bereichOptions (Optionen für Dropdown "Bereich") und rolleOptions (Optionen für das Dropdown "Rolle"). */
+/*
+  Props als Parameter:
+  - open (boolean, ob das Modal geöffnet ist oder nicht)
+  - onClose (Funktion zum Schließen des Modals)
+  - teilnehmer (zu bearbeitender Teilnehmer)
+  - onUpdateTeilnehmer (Funktion zum Aktualisieren der Teilnehmerdaten)
+  - bereichOptions (Optionen für Dropdown "Bereich")
+  - rolleOptions (Optionen für das Dropdown "Rolle").
+*/
 const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, bereichOptions, rolleOptions }) => {
   
   /*die bearbeiteten Daten des Teilnehmers, die im Modal angezeigt werden. */
   const [editedTeilnehmer, setEditedTeilnehmer] = useState({});
 
-  /*den Zustand "editedTeilnehmer" aktualisieren, wenn sich die teilnehmer prop ändert. 
-  Er setzt den Ausgangszustand für den bearbeiteten Teilnehmer auf der Grundlage der über props empfangenen Daten. */
+  /*
+    Den Zustand "editedTeilnehmer" aktualisieren, wenn sich die "teilnehmer" prop ändert.
+    Er setzt den Ausgangszustand für den bearbeiteten Teilnehmer auf der Grundlage der über Props empfangenen Daten.
+  */
   useEffect(() => {
     setEditedTeilnehmer({
       vorname: teilnehmer?.vorname || '',
@@ -23,6 +30,7 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
     });
   }, [teilnehmer]);
 
+   // Funktion zum Speichern der bearbeiteten Teilnehmerdaten
   const handleSave = async () => {
     try {
       const response = await fetch(`http://localhost:5222/api/teilnehmer/${teilnehmer.teilnehmerId}`, {
@@ -50,6 +58,7 @@ const TeilnehmerBearbeiten = ({ open, onClose, teilnehmer, onUpdateTeilnehmer, b
     }
   };
 
+   // JSX für die Komponente
   return (
     <Modal className="bearbeiten-modal" isOpen={open} onRequestClose={onClose}>
       <div className="teilnehmer-bearbeiten-content">

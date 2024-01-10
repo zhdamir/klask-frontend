@@ -75,7 +75,7 @@ body {
     /*overflow: hidden;
     overflow-x: hidden;*/
     color: var(--blau-dark-2);
-    background-image: url(../resources/images/sexyBG.PNG);
+    background-image: url(../resources/images/BG.PNG);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -141,7 +141,6 @@ form {
   --transparent: .3;
   margin:1rem 3rem;
   min-height: calc(100vh - 20vh - 62px);
-  /*von james*/
   border: 2px solid #15263D;
   border-radius: 20px;
   background-color: #B1C7DC55;

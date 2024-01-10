@@ -3,6 +3,8 @@ import TeilnehmerBearbeiten from './TeilnehmerBearbeiten';
 import '../styles/SpielerUebersicht.css';
 
 function SpielerUebersicht() {
+
+  // State-Hooks für die verschiedenen Daten und Zustände
   const [teilnehmerList, setTeilnehmerList] = useState([]);
   const [bereichOptions, setBereichOptions] = useState([]); // State to hold fetched Bereich options
   const [rolleOptions, setRolleOptions] = useState([]); // State to hold fetched Rolle options
@@ -10,6 +12,7 @@ function SpielerUebersicht() {
   const [selectedTeilnehmer, setSelectedTeilnehmer] = useState(null);
 
   useEffect(() => {
+    // Daten beim Mounten der Komponente holen
     const fetchData = async () => {
       try {
         // Fetch Teilnehmer data
@@ -51,13 +54,15 @@ function SpielerUebersicht() {
 
     fetchData();
   }, [teilnehmerList]);//teilnehmerList hinzugefügt
-  //now useEffect runs whenever teilnehmerList changes
+   // useEffect wird ausgeführt, wenn teilnehmerList sich ändert
 
+   // Funktion, um das Bearbeiten-Dialogfeld zu öffnen
   const handleEditClick = (teilnehmer) => {
     setSelectedTeilnehmer(teilnehmer);
     setEditDialogOpen(true);
   };
 
+  // Funktion zum Aktualisieren eines Teilnehmers in der Liste
   const handleUpdateTeilnehmer = (teilnehmerId, updatedTeilnehmer) => {
     setTeilnehmerList((prevList) => {
       const updatedList = prevList.map((teilnehmer) =>
@@ -67,6 +72,7 @@ function SpielerUebersicht() {
     });
   };
 
+   // JSX für die Komponente
   return (
     <div className='teilnehmer-flex-container'>
        <div className="teilnehmerListe">

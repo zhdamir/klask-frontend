@@ -1,4 +1,4 @@
-.teilnehmerListe-modal{/* Set your desired width and height */
+.teilnehmerListe-modal{
 
   width: 50%;
   height: 70%;
@@ -7,15 +7,15 @@
   left: 23%;
   top: 17%;
   padding: 40px;
-  overflow-y: auto; /* Add this line to enable vertical scrolling */
-  max-height: 80vh; /* Add a maximum height to the container */
+  overflow-y: auto; 
+  max-height: 80vh; 
   background-color: #0a169a;
   color: #15263D;
   background-color: white;
   overflow: hidden;
   overflow-x: hidden;
   color: var(--blau-dark-2);
-  background-image: url(../resources/images/sexyBG.PNG);
+  background-image: url(../resources/images/BG.PNG);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -52,14 +52,14 @@
   position: fixed;
   left: 23%;
   top: 17%;
-  overflow: auto; /* Enable overall modal scrolling */
+  overflow: auto; 
   background-color: #0a169a;
   color: #15263D;
   background-color: white;
   overflow: hidden;
   overflow-x: hidden;
   color: var(--blau-dark-2);
-  background-image: url(../resources/images/sexyBG.PNG);
+  background-image: url(../resources/images/BG.PNG);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -72,7 +72,7 @@
   position: fixed;
   left: 23%;
   top: 17%;
-  overflow: auto; /* Enable overall modal scrolling */
+  overflow: auto; 
   
 }
 
@@ -92,7 +92,7 @@ ul{
   padding: 2rem;
   overflow: hidden;
   color: var(--blau-dark-2);
-  background-image: url(../resources/images/sexyBG.PNG);
+  background-image: url(../resources/images/BG.PNG);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -115,24 +115,24 @@ ul{
     rgba(250, 245, 171, var(--transparent)) 99.2%
   );
   box-sizing: border-box;
-  margin: 0; /* Remove default margin */
-  position: absolute;
+  margin: 0;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  position: absolute;
 }
 
 ul {
-  margin: 1rem; /* Add some margin around the entire list */
+  margin: 1rem; 
 }
 
 li {
-  margin-bottom: 0.5rem; /* Adjust the margin between list items */
+  margin-bottom: 0.5rem; 
 }
 
 input[type="checkbox"] {
-  margin-right: 0.5rem; /* Adjust the margin between checkbox and text */
+  margin-right: 0.5rem;
   
 }
 
