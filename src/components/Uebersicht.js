@@ -621,7 +621,7 @@ function Uebersicht() {
 <button className="submitScore" onClick={handleSubmitScores}>Submit Scores</button>
         </>
       ) : (
-        <p>No active Turnier found.</p>
+        <p>Kein aktuelles Turnier gefunden.</p>
       )}
     </div>
   );
