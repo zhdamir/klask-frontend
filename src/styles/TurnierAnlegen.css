@@ -69,22 +69,62 @@ font-size: 20px;
     grid-row-end: 2;
   }
 
-  .input-startdatum {
-   
+  .custom-datepicker-wrapper {
     margin-right: 10px;
     grid-column-start: 3;
     grid-column-end: 5;
     grid-row-start: 3;
     grid-row-end: 3;
+    /*background-color: aquamarine;*/
+  display: flex;
+    
+  }
+  
+  .custom-datepicker-wrapper .react-datepicker__input-container input {
+    /* Optional: Additional styles for the input element */
+    width: 100%;
+    height: 100%;
+   flex: 1;
   }
 
-  .input-enddatum {
-   
+  .custom-datepicker-wrapper .react-datepicker__input-container {
+    height: 100%; /* Set the height to 100% or a specific value */
+    display: flex;
+    align-items: center; /* Center the input vertically within the container */
+  }
+  
+  .custom-datepicker-wrapper .react-datepicker__input-container input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+ 
+
+  .custom-datepicker-wrapper2{
     margin-right: 10px;
     grid-column-start: 3;
     grid-column-end: 5;
     grid-row-start: 4;
     grid-row-end: 4;
+    /*background-color: rgb(235, 195, 93);*/
+    height: 100%;
+  }
+
+  .custom-datepicker-wrapper2 .react-datepicker__input-container .input-enddatum {
+    /* Optional: Additional styles for the input element */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box; 
+  }
+
+  .custom-datepicker-wrapper2 .react-datepicker__input-container {
+    height: 100%; /* Set the height to 100% or a specific value */
+    display: flex;
+    align-items: center; /* Center the input vertically within the container */
+  }
+  
+  .custom-datepicker-wrapper2 .react-datepicker__input-container input {
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .input-anzahl {

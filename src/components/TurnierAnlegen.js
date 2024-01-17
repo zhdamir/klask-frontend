@@ -1,42 +1,27 @@
+
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/TurnierAnlegen.css';
-const TurnierAnlegen = () => {
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-  // States für die Eingabefelder des Turniers
+const TurnierAnlegen = () => {
   const [turnierTitel, setTurnierTitel] = useState('');
-  const [startDatum, setStartDatum] = useState('');
-  const [endDatum, setEndDatum] = useState('');
+  const [startDatum, setStartDatum] = useState(new Date());
+  const [endDatum, setEndDatum] = useState(new Date());
   const [anzahlGruppen, setAnzahlGruppen] = useState('');
   const [isActive, setIsActive] = useState(false);
-  
-  // State zur Verwaltung der Sichtbarkeit des TeilnehmerlisteDialogs
-  const [teilnehmerDialogOpen, setTeilnehmerDialogOpen] = useState(false);
-
-  // State zum Speichern der Liste der Teilnehmer
-  const [teilnehmerList, setTeilnehmerList] = useState([]);
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Funktion zum Abrufen der Teilnehmerdaten
-    const fetchData = async () => {
-      try {
-        // Teilnehmerdaten abrufen
-        const teilnehmerResponse = await fetch('http://localhost:5222/api/teilnehmer');
-        const teilnehmerData = await teilnehmerResponse.json();
-        // Teilnehmerliste setzen
-        setTeilnehmerList(teilnehmerData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData(); // Initial fetch
-  }, []);
 
-   // Funktion zum Erstellen eines Turniers
+
   const handleCreateTurnier = async () => {
     try {
+      const selectedStartDate = startDatum.toISOString();
+      const selectedEndDate = endDatum.toISOString();
+
       const response = await fetch('http://localhost:5222/api/turnier', {
         method: 'POST',
         headers: {
@@ -44,19 +29,16 @@ const TurnierAnlegen = () => {
         },
         body: JSON.stringify({
           turnierTitel,
-          startDatum,
-          endDatum,
+          startDatum: selectedStartDate,
+          endDatum: selectedEndDate,
           anzahlGruppen,
-          isActive: JSON.parse(isActive), // In Boolean konvertieren
+          isActive: JSON.parse(isActive),
         }),
       });
 
-      // Überprüfen, ob die Anfrage erfolgreich war
       if (response.ok) {
-        // Turnier erfolgreich erstellt, Navigation zur Turnierübersicht
         navigate("/TurnierUebersicht");
       } else {
-         // Fehler behandeln
         console.error('Error creating Turnier:', response.statusText);
       }
     } catch (error) {
@@ -64,36 +46,44 @@ const TurnierAnlegen = () => {
     }
   };
 
-
-// JSX für die Komponente
   return (
     <div className='turnier-container'>
       <h1 className='turnier-anlegen'> Turnier anlegen</h1>
-     
-        <label className='label-titel'>Titel:</label>
-        <input className='input-titel' type="text" value={turnierTitel} onChange={(e) => setTurnierTitel(e.target.value)} />
-      
-     
-        <label className='label-startdatum'>Start Datum:</label>
-        <input className='input-startdatum' type="date" value={startDatum} onChange={(e) => setStartDatum(e.target.value)} />
-     
-        <label className='label-enddatum'>End Datum:</label>
-        <input className='input-enddatum' type="date" value={endDatum} onChange={(e) => setEndDatum(e.target.value)} />
-      
-        <label className='label-anzahl'>Anzahl Gruppen:</label>
-        <input className='input-anzahl' type="text" value={anzahlGruppen} onChange={(e) => setAnzahlGruppen(e.target.value)} />
-     
-        <label className='label-status'>Status:</label>
-        <select className='input-status' value={isActive} onChange={(e) => setIsActive(e.target.value)}>
-          <option value="true">Aktiv</option>
-          <option value="false">Inaktiv</option>
-        </select>
-     
+
+      <label className='label-titel'>Titel:</label>
+      <input className='input-titel' type="text" value={turnierTitel} onChange={(e) => setTurnierTitel(e.target.value)} />
+
+      <label className='label-startdatum'>Start Datum:</label>
+      <DatePicker
+        selected={startDatum}
+        onChange={(date) => setStartDatum(date)}
+        dateFormat="dd/MM/yyyy"
+        wrapperClassName='custom-datepicker-wrapper'
+  className='input-startdatum'
+      />
+
+      <label className='label-enddatum'>End Datum:</label>
+      <DatePicker
+        selected={endDatum}
+        onChange={(date) => setEndDatum(date)}
+        dateFormat="dd/MM/yyyy"
+        wrapperClassName='custom-datepicker-wrapper2'
+  className='input-enddatum'
+      />
+
+      <label className='label-anzahl'>Anzahl Gruppen:</label>
+      <input className='input-anzahl' type="text" value={anzahlGruppen} onChange={(e) => setAnzahlGruppen(e.target.value)} />
+
+      <label className='label-status'>Status:</label>
+      <select className='input-status' value={isActive} onChange={(e) => setIsActive(e.target.value)}>
+        <option value="true">Aktiv</option>
+        <option value="false">Inaktiv</option>
+      </select>
 
       <button className="btn-anlegen" onClick={handleCreateTurnier}>Turnier anlegen</button>
-
     </div>
   );
 };
 
 export default TurnierAnlegen;
+
