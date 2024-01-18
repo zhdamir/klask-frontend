@@ -94,7 +94,7 @@ const TeilnehmerlisteDialog = ({ open, onClose,teilnehmerList, turnier }) => {
             </div>
           </div>
         <ul>
-          {teilnehmerList.map((teilnehmer) => (
+          {teilnehmerList .sort((a, b) => a.vorname.localeCompare(b.vorname)).map((teilnehmer) => (
             <li key={teilnehmer.teilnehmerId}>
               <input
                 type="checkbox"
