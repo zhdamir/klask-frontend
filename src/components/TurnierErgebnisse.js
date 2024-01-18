@@ -80,7 +80,7 @@ function TurnierErgebnisse() {
         <tbody>
           {turnierList
           .filter((turnier) => !turnier.isActive) // Filter only inactive Turniere
-            .sort((a, b) => a.id - b.id)
+          .sort((a, b) => b.id - a.id)
             .map((turnier) => (
               <tr key={turnier.id}>
                 <td >{turnier.turnierTitel}</td>
