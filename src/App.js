@@ -20,10 +20,6 @@ function App(){
 
   const navigate = useNavigate();
 
-  /*useEffect(() => {
-    // Navigate to the default route when the component mounts
-    navigate('/Uebersicht');
-  }, [navigate]);*/
 
   return(
     <>
@@ -31,14 +27,13 @@ function App(){
      <Header/>
     <div className="content">
       <Routes>
-        <Route path="/SpielerUebersicht" element={<SpielerUebersicht/>} /> {/* Define a route for SpielerUebersicht */}
-        <Route path="/TurnierUebersicht" element={<TurnierUebersicht/>} /> {/* Define a route for TurnierUebersicht */}
-        <Route path="/TurnierErgebnisse" element={<TurnierErgebnisse/>} /> {/* Define a route for TurnierUebersicht */}
-        <Route path="/Uebersicht" element={<Uebersicht/>} /> {/* Define a route for Uebersicht */}
-        {/* Other routes for additional pages, if needed */}
-        <Route path="/TeilnehmerAnlegen" element={<TeilnehmerAnlegen/>} /> {/* Define a route for CreateTeilnehmer */}
-        <Route path="/TurnierAnlegen" element={<TurnierAnlegen/>} /> {/* Define a route for CreateTeilnehmer */}
-        <Route path="/UebersichtHistorie/:turnierId" element={<UebersichtHistorie/>} /> {/* Define a route for TurnierUebersicht */}
+        <Route path="/SpielerUebersicht" element={<SpielerUebersicht/>} /> 
+        <Route path="/TurnierUebersicht" element={<TurnierUebersicht/>} /> 
+        <Route path="/TurnierErgebnisse" element={<TurnierErgebnisse/>} /> 
+        <Route path="/Uebersicht" element={<Uebersicht/>} /> 
+        <Route path="/TeilnehmerAnlegen" element={<TeilnehmerAnlegen/>} /> 
+        <Route path="/TurnierAnlegen" element={<TurnierAnlegen/>} /> 
+        <Route path="/UebersichtHistorie/:turnierId" element={<UebersichtHistorie/>} /> 
       </Routes>
       </div>
       </div>
